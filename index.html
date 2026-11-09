@@ -3,406 +3,877 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Tuần Trăng Mật Cùng Anh Như Ý</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f9e1e9">
+<title>Tuần Trăng Mật Cùng Anh Như Ý ♡</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Serif:wght@400;600;700&display=swap" rel="stylesheet">
+
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
 <style>
-:root{--pink:#d66e91;--pale:#fff0f5;--ink:#49333e;--muted:#927e87;--line:#f0dce4;--green:#438b68;--red:#c65c6e}
+:root{
+ --pink:#d66e91;
+ --pink-dark:#a34c6d;
+ --pale:#fff0f5;
+ --cream:#fff9fb;
+ --ink:#503946;
+ --muted:#987e89;
+ --line:#f0dce4;
+ --green:#438b68;
+ --red:#c65c6e;
+}
 *{box-sizing:border-box}
-body{margin:0;background:#fff9fb;color:var(--ink);font-family:Arial,sans-serif}
-header{background:linear-gradient(120deg,#f6dce6,#fff0e7);padding:30px 18px}
-.wrap{max-width:1050px;margin:auto}
-h1{font-family:"Noto Serif",Georgia,serif;font-size:clamp(30px,5vw,45px);color:#80465e;margin:10px 0;letter-spacing:0;word-spacing:0;}
-.sub{color:#886c78;font-size:14px}
-main{max-width:1050px;margin:22px auto;padding:0 15px 40px}
-.card{background:white;border:1px solid var(--line);border-radius:17px;padding:18px;margin-bottom:15px;box-shadow:0 6px 24px #9d657010}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.stat{background:white;border:1px solid var(--line);border-radius:15px;padding:15px}
-.stat small{color:var(--muted)}
-.stat strong{display:block;font-size:clamp(17px,3vw,24px);color:#80465e;margin-top:8px}
-nav{display:flex;gap:8px;overflow:auto;margin:20px 0}
-button{border:0;background:var(--pink);color:white;padding:11px 15px;border-radius:10px;font-weight:bold;cursor:pointer}
-button.secondary{background:var(--pale);color:#96546d}
+body{
+ margin:0;
+ background:var(--cream);
+ color:var(--ink);
+ font-family:"Be Vietnam Pro",Arial,sans-serif;
+ font-size:14px;
+ line-height:1.6;
+}
+button,input,select{font:inherit}
+button{cursor:pointer}
+header{
+ background:linear-gradient(120deg,#f6dce6,#fff0e7);
+ padding:34px 20px;
+}
+.wrap{max-width:1080px;margin:auto}
+.eyebrow{
+ color:#926779;
+ letter-spacing:1px;
+ font-size:12px;
+ font-weight:600;
+}
+h1{
+ font-family:"Noto Serif",Georgia,serif;
+ font-size:clamp(30px,5vw,46px);
+ line-height:1.35;
+ letter-spacing:0;
+ word-spacing:0;
+ color:#85465e;
+ margin:8px 0 10px;
+ font-weight:700;
+}
+.members-line{color:#865f70;font-size:14px}
+main{max-width:1080px;margin:24px auto;padding:0 16px 45px}
+.card{
+ background:#fff;
+ border:1px solid var(--line);
+ border-radius:18px;
+ padding:20px;
+ margin-bottom:16px;
+ box-shadow:0 6px 25px #9d657010;
+}
+.card h2,.card h3{color:#89506a}
+.card h2{font-family:"Noto Serif",serif;font-size:21px;margin:0 0 14px}
+.card h3{margin-top:0}
+.hint{color:var(--muted);font-size:13px;line-height:1.7}
+.notice{
+ background:#fff0f5;
+ border-radius:13px;
+ padding:13px 16px;
+ margin-bottom:16px;
+ font-size:13px;
+}
+.stats{
+ display:grid;
+ grid-template-columns:repeat(4,minmax(0,1fr));
+ gap:12px;
+ margin:16px 0 20px;
+}
+.stat{
+ background:#fff;
+ border:1px solid var(--line);
+ border-radius:16px;
+ padding:16px;
+ min-width:0;
+}
+.stat small{color:var(--muted);font-size:12px}
+.stat strong{
+ display:block;
+ color:#89506a;
+ font-size:clamp(17px,2.5vw,24px);
+ margin-top:7px;
+ overflow-wrap:anywhere;
+}
+nav{
+ display:flex;
+ gap:8px;
+ overflow-x:auto;
+ padding:2px 0 12px;
+ margin-bottom:12px;
+}
+button{
+ background:var(--pink);
+ color:#fff;
+ border:0;
+ border-radius:11px;
+ padding:11px 16px;
+ font-weight:600;
+ transition:transform .2s,box-shadow .2s;
+}
+button:hover{transform:translateY(-2px);box-shadow:0 5px 15px #d66e9130}
+button.secondary{background:var(--pale);color:var(--pink-dark)}
 button.danger{background:#fff0f0;color:#b34d5c}
-.tab{white-space:nowrap;background:white;color:#795c68;border:1px solid var(--line);border-radius:30px}
-.tab.active{background:var(--pink);color:white}
-input,select{width:100%;padding:11px;border:1px solid #e7d4dd;border-radius:10px;font:inherit;color:var(--ink);background:white}
-label{font-size:13px;font-weight:bold;display:block;margin-bottom:6px}
-.field{margin-bottom:13px}
+button.tab{
+ white-space:nowrap;
+ border:1px solid var(--line);
+ background:#fff;
+ color:#795c68;
+ border-radius:30px;
+}
+button.tab.active{background:var(--pink);color:#fff;border-color:var(--pink)}
+button:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.page.hidden,.hidden{display:none!important}
+.field{margin-bottom:14px;min-width:0}
+label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
+input,select{
+ width:100%;
+ min-width:0;
+ padding:12px;
+ border:1px solid #e7d4dd;
+ border-radius:11px;
+ background:#fff;
+ color:var(--ink);
+ outline:none;
+}
+input:focus,select:focus{border-color:var(--pink);box-shadow:0 0 0 3px #d66e911a}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .full{grid-column:1/-1}
 .checks{display:flex;gap:10px;flex-wrap:wrap}
-.checks label{background:var(--pale);padding:10px;border-radius:10px;margin:0}
-.checks input{width:auto}
-.hidden{display:none!important}
-.hint{font-size:13px;color:var(--muted);line-height:1.5}
-table{width:100%;border-collapse:collapse;min-width:550px;font-size:13px}
-th,td{text-align:left;padding:11px 8px;border-bottom:1px solid var(--line)}
-th{color:#936c7c}
-.tablewrap{overflow-x:auto}
-.balance{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.person{border:1px solid var(--line);padding:13px;border-radius:13px}
+.checks label{
+ background:var(--pale);
+ padding:10px 13px;
+ border-radius:11px;
+ display:flex;
+ align-items:center;
+ gap:7px;
+ margin:0;
+}
+.checks input{width:auto;accent-color:var(--pink)}
+.balance{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.person{border:1px solid var(--line);padding:15px;border-radius:14px;min-width:0}
 .person h3{margin:0 0 10px}
-.person p{font-size:12px;line-height:1.7;color:var(--muted)}
-.good{color:var(--green)}.bad{color:var(--red)}
-#login{max-width:450px;margin:30px auto}
-#login h2{color:#80465e}
-.notice{background:#fff0f5;padding:13px;border-radius:12px;font-size:13px;margin-bottom:15px}
+.person p{font-size:12px;line-height:1.9;color:var(--muted)}
+.good{color:var(--green)}
+.bad{color:var(--red)}
+.tablewrap{width:100%;overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:580px;font-size:13px}
+th,td{text-align:left;padding:12px 9px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{color:#936c7c;background:#fffafd}
+.empty{text-align:center;color:var(--muted);padding:25px}
+.row-between{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+#login{max-width:460px;margin:30px auto}
+#login h2{font-family:"Noto Serif",serif;color:#85465e}
+#loginMessage{color:var(--red);overflow-wrap:anywhere}
 footer{text-align:center;color:#a28d96;font-size:12px;padding:25px}
-@media(max-width:700px){
-.stats{grid-template-columns:1fr 1fr}
-.grid{grid-template-columns:1fr}
-.full{grid-column:auto}
-.balance{grid-template-columns:1fr}
-.card{padding:14px}
+#loading{color:var(--muted);text-align:center;padding:20px}
+
+/* LOVE POPUP */
+.love-overlay{
+ position:fixed;inset:0;z-index:99999;
+ background:#411d30aa;
+ backdrop-filter:blur(9px);
+ display:flex;align-items:center;justify-content:center;
+ padding:18px;
+}
+.love-overlay.hidden{display:none!important}
+.love-modal{
+ width:min(440px,100%);
+ background:linear-gradient(145deg,#fffafd,#ffe6ef);
+ border:2px solid #f3b9ce;
+ border-radius:25px;
+ padding:30px 23px;
+ text-align:center;
+ box-shadow:0 20px 70px #3e152d55;
+ animation:lovePop .45s cubic-bezier(.2,1.5,.5,1);
+}
+@keyframes lovePop{
+ from{opacity:0;transform:scale(.65) translateY(25px)}
+ to{opacity:1;transform:scale(1) translateY(0)}
+}
+.love-icon{font-size:55px;margin-bottom:12px;animation:heartBeat 1s infinite}
+@keyframes heartBeat{0%,100%{transform:scale(1)}50%{transform:scale(1.16)}}
+.love-modal h2{
+ color:#a33f69;
+ font-family:"Noto Serif",serif;
+ font-size:24px;
+ line-height:1.5;
+ margin:8px 0 22px;
+}
+.love-actions{display:flex;flex-direction:column;gap:12px}
+.love-actions button{width:100%;padding:14px 12px;border-radius:14px;font-size:14px}
+.love-yes{background:#d66e91;color:white}
+.love-no{background:white;color:#a33f69;border:1px solid #e8b5c8}
+.love-small{color:#9b7485;font-size:12px;margin-top:16px}
+
+/* FLOATING LOVE EFFECT */
+.love-float{
+ position:fixed;z-index:9998;bottom:-55px;
+ pointer-events:none;
+ animation:loveFloat 4s ease-out forwards;
+ filter:drop-shadow(0 3px 5px #e88ba866);
+}
+@keyframes loveFloat{
+ 0%{transform:translateY(0) rotate(0) scale(.5);opacity:0}
+ 15%{opacity:1}
+ 100%{transform:translateY(-110vh) rotate(35deg) scale(1.5);opacity:0}
+}
+
+/* MOUSE SPARKLES */
+.mouse-sparkle{
+ position:fixed;z-index:99997;pointer-events:none;
+ color:#e9a4c0;font-size:17px;
+ animation:sparkleBlink .8s ease-out forwards;
+}
+@keyframes sparkleBlink{
+ 0%{opacity:0;transform:scale(.2) rotate(0)}
+ 30%{opacity:1;transform:scale(1.4) rotate(90deg)}
+ 100%{opacity:0;transform:scale(.2) rotate(180deg) translateY(-15px)}
+}
+
+@media(max-width:760px){
+ .stats{grid-template-columns:1fr 1fr}
+ .balance{grid-template-columns:1fr}
+ .card{padding:15px}
+}
+@media(max-width:480px){
+ header{padding:25px 16px}
+ main{padding:0 11px 35px}
+ .grid{grid-template-columns:1fr}
+ .full{grid-column:auto}
+ .stat{padding:12px}
+ .stats{gap:9px}
+ .love-modal{padding:25px 18px}
+}
+@media(prefers-reduced-motion:reduce){
+ .love-modal,.love-icon,.love-float,.mouse-sparkle{animation:none!important}
 }
 </style>
 </head>
+
 <body>
 
-<header>
-<div class="wrap">
-<div class="sub">ĐÀ LẠT • 13–14/12/2026</div>
-<h1>Tuần Trăng Mật<br>Cùng Anh Như Ý ♡</h1>
-<div class="sub">🌷 Ý &nbsp; · &nbsp; 💙 Thoa &nbsp; · &nbsp; 💚 Thắm</div>
+<!-- POPUP TÌNH YÊU -->
+<div id="loveOverlay" class="love-overlay">
+ <div class="love-modal">
+  <div class="love-icon" id="loveIcon">💗</div>
+  <h2 id="loveQuestion">Em có yêu anh Như Ý không?</h2>
+  <div class="love-actions" id="loveActions">
+   <button class="love-yes" onclick="loveFirstYes()">💕 Có, em rất yêu anh</button>
+   <button class="love-no" onclick="loveFirstNo()">Không.</button>
+  </div>
+  <div class="love-small">Made with love by Anh Như Ý ♡</div>
+ </div>
 </div>
+
+<header>
+ <div class="wrap">
+  <div class="eyebrow">ĐÀ LẠT • 13–14/12/2026</div>
+  <h1>Tuần Trăng Mật<br>Cùng Anh Như Ý ♡</h1>
+  <div class="members-line">🌷 Ý &nbsp; · &nbsp; 💙 Thoa &nbsp; · &nbsp; 💚 Thắm</div>
+ </div>
 </header>
 
 <section id="login" class="card">
-<h2>🔐 Đăng nhập chuyến đi</h2>
-<p class="hint">Sử dụng email và mật khẩu đã được tạo trong Firebase Authentication.</p>
-<div class="field">
-<label>Email</label>
-<input id="email" type="email" placeholder="Nhập email">
-</div>
-<div class="field">
-<label>Mật khẩu</label>
-<input id="password" type="password" placeholder="Nhập mật khẩu">
-</div>
-<button onclick="login()">Đăng nhập</button>
-<p id="loginMessage" class="hint"></p>
+ <h2>🔐 Đăng nhập chuyến đi</h2>
+ <p class="hint">Sử dụng email và mật khẩu riêng đã được tạo trong Firebase.</p>
+ <form id="loginForm">
+  <div class="field">
+   <label for="email">Email</label>
+   <input id="email" type="email" autocomplete="username" required placeholder="Nhập email">
+  </div>
+  <div class="field">
+   <label for="password">Mật khẩu</label>
+   <input id="password" type="password" autocomplete="current-password" required placeholder="Nhập mật khẩu">
+  </div>
+  <button type="submit" id="loginButton">Đăng nhập</button>
+  <p id="loginMessage" class="hint" role="alert"></p>
+ </form>
 </section>
+
+<div id="loading" class="hidden">Đang tải dữ liệu chuyến đi... ♡</div>
 
 <main id="app" class="hidden">
-<div class="notice">
-☁️ Dữ liệu được đồng bộ trực tiếp qua Firebase. Chỉ Ý được quản lý góp quỹ.
-</div>
+ <div class="notice">☁️ Dữ liệu được đồng bộ trực tiếp qua Firebase. Chỉ Ý được quản lý góp quỹ.</div>
 
-<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:15px">
-<span id="welcome" class="hint"></span>
-<button class="secondary" onclick="logout()">Đăng xuất</button>
-</div>
+ <div class="row-between" style="margin-bottom:15px">
+  <span id="welcome" class="hint"></span>
+  <button class="secondary" onclick="logout()">Đăng xuất</button>
+ </div>
 
-<section class="stats">
-<div class="stat"><small>Tổng góp quỹ</small><strong id="totalFund">0 ₫</strong></div>
-<div class="stat"><small>Đã chi từ quỹ</small><strong id="fundSpent">0 ₫</strong></div>
-<div class="stat"><small>Quỹ còn lại</small><strong id="fundLeft">0 ₫</strong></div>
-<div class="stat"><small>Tổng chi chuyến đi</small><strong id="totalSpent">0 ₫</strong></div>
-</section>
+ <section class="stats">
+  <div class="stat"><small>💰 Tổng góp quỹ</small><strong id="totalFund">0 ₫</strong></div>
+  <div class="stat"><small>🧾 Đã chi từ quỹ</small><strong id="fundSpent">0 ₫</strong></div>
+  <div class="stat"><small>🌷 Quỹ còn lại</small><strong id="fundLeft">0 ₫</strong></div>
+  <div class="stat"><small>🛍️ Tổng chi chuyến đi</small><strong id="totalSpent">0 ₫</strong></div>
+ </section>
 
-<nav>
-<button class="tab active" data-page="home">Tổng quan</button>
-<button class="tab" data-page="fund" id="fundTab">Góp quỹ</button>
-<button class="tab" data-page="expense">Chi tiêu</button>
-<button class="tab" data-page="history">Lịch sử</button>
-<button class="tab" data-page="settle">Quyết toán</button>
-</nav>
+ <nav>
+  <button class="tab active" data-page="home">🏡 Tổng quan</button>
+  <button class="tab" data-page="fund" id="fundTab">💰 Góp quỹ</button>
+  <button class="tab" data-page="expense">🧾 Chi tiêu</button>
+  <button class="tab" data-page="history">📚 Lịch sử</button>
+  <button class="tab" data-page="settle">⚖️ Quyết toán</button>
+ </nav>
 
-<section id="home" class="page">
-<div class="card">
-<h2>🌲 Chào mừng đến Đà Lạt!</h2>
-<p class="hint">Mọi khoản thu chi của chuyến đi đều được cập nhật tại đây.</p>
-<div class="balance">
-<div class="person"><h3>🌷 Ý</h3><p>Quản lý góp quỹ</p></div>
-<div class="person"><h3>💙 Thoa</h3><p>Thành viên</p></div>
-<div class="person"><h3>💚 Thắm</h3><p>Thành viên</p></div>
-</div>
-</div>
-</section>
+ <section id="home" class="page">
+  <div class="card">
+   <h2>🌲 Chào mừng đến Đà Lạt!</h2>
+   <p class="hint">Một chuyến đi, ba thành viên và thật nhiều kỷ niệm đẹp.</p>
+   <div class="balance">
+    <div class="person"><h3>🌷 Ý</h3><p>Quản lý góp quỹ</p></div>
+    <div class="person"><h3>💙 Thoa</h3><p>Thành viên chuyến đi</p></div>
+    <div class="person"><h3>💚 Thắm</h3><p>Thành viên chuyến đi</p></div>
+   </div>
+  </div>
+  <div class="card">
+   <h2>📊 Tóm tắt chuyến đi</h2>
+   <p id="summaryText" class="hint">Đang cập nhật dữ liệu...</p>
+  </div>
+ </section>
 
-<section id="fund" class="page hidden">
-<div class="card">
-<h2>💰 Thêm khoản góp quỹ</h2>
-<p class="hint">Chỉ tài khoản Ý có quyền thực hiện chức năng này.</p>
-<form id="fundForm">
-<div class="grid">
-<div class="field"><label>Ngày góp</label><input type="date" id="fundDate" required></div>
-<div class="field"><label>Người góp</label>
-<select id="fundPerson"><option>Ý</option><option>Thoa</option><option>Thắm</option></select>
-</div>
-<div class="field full"><label>Số tiền (VNĐ)</label><input type="number" id="fundAmount" min="1" required placeholder="Ví dụ: 500000"></div>
-<div class="field full"><label>Ghi chú</label><input id="fundNote" placeholder="Góp quỹ đợt 1"></div>
-</div>
-<button type="submit">＋ Lưu góp quỹ</button>
-</form>
-</div>
-</section>
+ <section id="fund" class="page hidden">
+  <div class="card">
+   <h2>💰 Thêm khoản góp quỹ</h2>
+   <p class="hint">Chỉ tài khoản Ý có quyền nhập, sửa và xóa các khoản góp quỹ.</p>
+   <form id="fundForm">
+    <div class="grid">
+     <div class="field">
+      <label>Ngày góp quỹ</label>
+      <input type="date" id="fundDate" required>
+     </div>
+     <div class="field">
+      <label>Người góp quỹ</label>
+      <select id="fundPerson"><option>Ý</option><option>Thoa</option><option>Thắm</option></select>
+     </div>
+     <div class="field full">
+      <label>Số tiền (VNĐ)</label>
+      <input type="number" id="fundAmount" min="1" step="1" required placeholder="Ví dụ: 500000">
+     </div>
+     <div class="field full">
+      <label>Ghi chú</label>
+      <input id="fundNote" maxlength="200" placeholder="Góp quỹ đợt 1">
+     </div>
+    </div>
+    <button type="submit">＋ Lưu góp quỹ</button>
+   </form>
+  </div>
+ </section>
 
-<section id="expense" class="page hidden">
-<div class="card">
-<h2>🧾 Thêm khoản chi tiêu</h2>
-<p class="hint">Chọn những người cùng chịu chi phí. Hệ thống tự chia đều trong nhóm được chọn.</p>
-<form id="expenseForm">
-<div class="grid">
-<div class="field"><label>Ngày chi</label><input type="date" id="expDate" required></div>
-<div class="field"><label>Danh mục</label>
-<select id="category">
-<option>Ăn uống</option><option>Lưu trú</option><option>Di chuyển</option><option>Tham quan</option><option>Mua sắm</option><option>Khác</option>
-</select></div>
-<div class="field full"><label>Nội dung chi</label><input id="description" required placeholder="Ví dụ: Ăn lẩu gà lá é"></div>
-<div class="field"><label>Số tiền (VNĐ)</label><input type="number" id="amount" min="1" required></div>
-<div class="field"><label>Người thanh toán</label>
-<select id="payer"><option>Ý</option><option>Thoa</option><option>Thắm</option></select>
-</div>
-<div class="field full"><label>Nguồn tiền</label>
-<select id="source"><option value="fund">Quỹ chung</option><option value="personal">Tiền túi</option></select>
-</div>
-<div class="field full"><label>Những người cùng chịu chi phí</label>
-<div class="checks">
-<label><input type="checkbox" name="member" value="Ý" checked> Ý</label>
-<label><input type="checkbox" name="member" value="Thoa" checked> Thoa</label>
-<label><input type="checkbox" name="member" value="Thắm" checked> Thắm</label>
-</div>
-</div>
-<div class="field full"><label>Ghi chú</label><input id="expNote" placeholder="Thông tin thêm"></div>
-</div>
-<button type="submit">＋ Lưu khoản chi</button>
-</form>
-</div>
-</section>
+ <section id="expense" class="page hidden">
+  <div class="card">
+   <h2>🧾 Thêm khoản chi tiêu</h2>
+   <p class="hint">Mỗi khoản chi có thể chọn một, hai hoặc cả ba người cùng chịu. Hệ thống chia đều trong nhóm được chọn.</p>
+   <form id="expenseForm">
+    <div class="grid">
+     <div class="field">
+      <label>Ngày chi</label>
+      <input type="date" id="expDate" required>
+     </div>
+     <div class="field">
+      <label>Danh mục</label>
+      <select id="category">
+       <option>Ăn uống</option>
+       <option>Lưu trú</option>
+       <option>Di chuyển</option>
+       <option>Tham quan</option>
+       <option>Mua sắm</option>
+       <option>Khác</option>
+      </select>
+     </div>
+     <div class="field full">
+      <label>Nội dung chi</label>
+      <input id="description" required maxlength="200" placeholder="Ví dụ: Ăn lẩu gà lá é">
+     </div>
+     <div class="field">
+      <label>Số tiền (VNĐ)</label>
+      <input type="number" id="amount" min="1" step="1" required>
+     </div>
+     <div class="field">
+      <label>Người thanh toán</label>
+      <select id="payer"><option>Ý</option><option>Thoa</option><option>Thắm</option></select>
+     </div>
+     <div class="field full">
+      <label>Nguồn tiền</label>
+      <select id="source">
+       <option value="fund">Quỹ chung</option>
+       <option value="personal">Tiền túi cá nhân</option>
+      </select>
+     </div>
+     <div class="field full">
+      <label>Những người cùng chịu chi phí</label>
+      <div class="checks">
+       <label><input type="checkbox" name="member" value="Ý" checked> 🌷 Ý</label>
+       <label><input type="checkbox" name="member" value="Thoa" checked> 💙 Thoa</label>
+       <label><input type="checkbox" name="member" value="Thắm" checked> 💚 Thắm</label>
+      </div>
+     </div>
+     <div class="field full">
+      <label>Ghi chú</label>
+      <input id="expNote" maxlength="200" placeholder="Thông tin thêm">
+     </div>
+    </div>
+    <button type="submit">＋ Lưu khoản chi</button>
+   </form>
+  </div>
+ </section>
 
-<section id="history" class="page hidden">
-<div class="card">
-<h2>Lịch sử góp quỹ</h2>
-<div class="tablewrap"><table>
-<thead><tr><th>Ngày</th><th>Người góp</th><th>Ghi chú</th><th>Số tiền</th><th></th></tr></thead>
-<tbody id="fundRows"></tbody>
-</table></div>
-</div>
-<div class="card">
-<h2>Lịch sử chi tiêu</h2>
-<div class="tablewrap"><table>
-<thead><tr><th>Ngày</th><th>Nội dung</th><th>Người trả</th><th>Nguồn</th><th>Người chịu</th><th>Số tiền</th><th></th></tr></thead>
-<tbody id="expenseRows"></tbody>
-</table></div>
-</div>
-<div class="card">
-<h3>Sao lưu dữ liệu</h3>
-<p class="hint">Tải dữ liệu về máy dưới dạng JSON.</p>
-<button class="secondary" onclick="backup()">Tải bản sao lưu</button>
-</div>
-</section>
+ <section id="history" class="page hidden">
+  <div class="card">
+   <div class="row-between">
+    <h2>💰 Lịch sử góp quỹ</h2>
+   </div>
+   <div class="tablewrap">
+    <table>
+     <thead><tr><th>Ngày</th><th>Người góp</th><th>Ghi chú</th><th>Số tiền</th><th>Thao tác</th></tr></thead>
+     <tbody id="fundRows"></tbody>
+    </table>
+   </div>
+  </div>
 
-<section id="settle" class="page hidden">
-<div class="card">
-<h2>⚖️ Quyết toán cuối chuyến</h2>
-<p class="hint">Khoản chi được chia đều cho những người đã chọn. Quỹ dư được hoàn theo tỷ lệ góp quỹ.</p>
-<div id="settlement" class="balance"></div>
-</div>
-</section>
+  <div class="card">
+   <h2>🧾 Lịch sử chi tiêu</h2>
+   <div class="tablewrap">
+    <table>
+     <thead><tr><th>Ngày</th><th>Nội dung</th><th>Người trả</th><th>Nguồn</th><th>Người chịu</th><th>Số tiền</th><th>Thao tác</th></tr></thead>
+     <tbody id="expenseRows"></tbody>
+    </table>
+   </div>
+  </div>
+
+  <div class="card">
+   <h3>📥 Sao lưu dữ liệu</h3>
+   <p class="hint">Tải bản sao lưu giao dịch về máy dưới dạng JSON.</p>
+   <button class="secondary" onclick="backup()">Tải bản sao lưu</button>
+  </div>
+ </section>
+
+ <section id="settle" class="page hidden">
+  <div class="card">
+   <h2>⚖️ Quyết toán cuối chuyến</h2>
+   <p class="hint">Tính tiền đã góp, tiền đã ứng cá nhân, phần chi phải chịu và phần quỹ dư được hoàn theo tỷ lệ đóng góp.</p>
+   <div id="settlement" class="balance"></div>
+  </div>
+ </section>
 </main>
 
-<footer>Made with ♡ for our Da Lat memories</footer>
+<footer>Made with ♡ for our Da Lat memories · Anh Như Ý</footer>
 
 <script>
+/* =====================================
+   1. FIREBASE CONFIGURATION
+===================================== */
+
 const firebaseConfig = {
- apiKey:"AIzaSyD4lIfLUuutmh-doMs08zADHT7N6k6kGuY",
- authDomain:"honey-moon-with-nhuy.firebaseapp.com",
- projectId:"honey-moon-with-nhuy",
- storageBucket:"honey-moon-with-nhuy.firebasestorage.app",
- messagingSenderId:"504295694998",
- appId:"1:504295694998:web:c9f1e9eab7fb45267b58b7",
- measurementId:"G-0Y4QR05D2S"
+ apiKey: "AIzaSyD4lIfLUuutmh-doMs08zADHT7N6k6kGuY",
+ authDomain: "honey-moon-with-nhuy.firebaseapp.com",
+ projectId: "honey-moon-with-nhuy",
+ storageBucket: "honey-moon-with-nhuy.firebasestorage.app",
+ messagingSenderId: "504295694998",
+ appId: "1:504295694998:web:c9f1e9eab7fb45267b58b7",
+ measurementId: "G-0Y4QR05D2S"
 };
 
-const OWNER_UID="u7DJYcsAp8anEnIWOPKfeQrFNt23";
-const PEOPLE=["Ý","Thoa","Thắm"];
+const OWNER_UID = "u7DJYcsAp8anEnIWOPKfeQrFNt23";
+const PEOPLE = ["Ý","Thoa","Thắm"];
 
 firebase.initializeApp(firebaseConfig);
-const auth=firebase.auth();
-const store=firebase.firestore();
+const auth = firebase.auth();
+const store = firebase.firestore();
 
-let currentUser=null;
-let funds=[];
-let expenses=[];
-let stopFunds=null;
-let stopExpenses=null;
+let currentUser = null;
+let funds = [];
+let expenses = [];
+let stopFunds = null;
+let stopExpenses = null;
 
-const $=id=>document.getElementById(id);
-const money=n=>(Number(n)||0).toLocaleString("vi-VN")+" ₫";
-const today=new Date().toLocaleDateString("en-CA");
-$("fundDate").value=today;
-$("expDate").value=today;
+const $ = id => document.getElementById(id);
+const money = n => (Number(n)||0).toLocaleString("vi-VN") + " ₫";
 
-function message(id,text){$(id).textContent=text}
+function escapeHTML(value) {
+ return String(value ?? "").replace(/[&<>"']/g, c => ({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
 
-function totals(){
- const fund=funds.reduce((s,x)=>s+Number(x.amount),0);
- const spentFund=expenses.filter(x=>x.source==="fund").reduce((s,x)=>s+Number(x.amount),0);
- const spent=expenses.reduce((s,x)=>s+Number(x.amount),0);
+function localDate() {
+ const d = new Date();
+ const local = new Date(d.getTime()-d.getTimezoneOffset()*60000);
+ return local.toISOString().slice(0,10);
+}
+
+$("fundDate").value = localDate();
+$("expDate").value = localDate();
+
+function isOwner() {
+ return !!currentUser && currentUser.uid === OWNER_UID;
+}
+
+function showMessage(text) {
+ $("loginMessage").textContent = text;
+}
+
+/* =====================================
+   2. LOVE POPUP
+===================================== */
+
+const loveOverlay = $("loveOverlay");
+const loveQuestion = $("loveQuestion");
+const loveActions = $("loveActions");
+const loveIcon = $("loveIcon");
+
+function showLovePopup(question, icon, buttons) {
+ loveQuestion.textContent = question;
+ loveIcon.textContent = icon;
+ loveActions.innerHTML = buttons;
+ loveOverlay.classList.remove("hidden");
+}
+
+function finishLovePopup(message) {
+ showLovePopup(
+  message,
+  "🤣💔",
+  '<div class="love-small">Đang chuẩn bị cho em đăng nhập...</div>'
+ );
+ setTimeout(() => {
+  loveOverlay.classList.add("hidden");
+  if (!currentUser) $("email").focus();
+ }, 5000);
+}
+
+function loveFirstYes() {
+ finishLovePopup("Toẹt vời, nhưng anh không yêu em 🤣🤣🤣");
+}
+
+function loveFirstNo() {
+ showLovePopup(
+  "Mày là con chó 😏😏",
+  "🐶",
+  '<button class="love-yes" onclick="loveTryAgain()">🔄 Chọn lại</button>'
+ );
+}
+
+function loveTryAgain() {
+ showLovePopup(
+  "Hỏi lại lần nữa, em có yêu anh Như Ý không?",
+  "🥺💕",
+  '<button class="love-yes" onclick="loveSecondAnswer()">💖 Có, em rất yêu anh</button>' +
+  '<button class="love-yes" onclick="loveSecondAnswer()">💝 Dĩ nhiên rồi, em yêu anh nhất.</button>'
+ );
+}
+
+function loveSecondAnswer() {
+ finishLovePopup("Kệ em, nhưng anh không yêu em 🤣");
+}
+
+/* =====================================
+   3. DECORATIVE LOVE ANIMATIONS
+===================================== */
+
+const loveSymbols = ["💗","💕","💖","💘","💝","❤️","🌷","🌸","💋","✨","🦋"];
+
+function createLoveFloat() {
+ const item = document.createElement("span");
+ item.className = "love-float";
+ item.textContent = loveSymbols[Math.floor(Math.random()*loveSymbols.length)];
+ item.style.left = Math.random()*95 + "vw";
+ item.style.fontSize = (20+Math.random()*25)+"px";
+ item.style.animationDuration = (3+Math.random()*2)+"s";
+ document.body.appendChild(item);
+ setTimeout(()=>item.remove(),5500);
+}
+
+function createLoveBurst() {
+ for(let i=0;i<5;i++) setTimeout(createLoveFloat,i*180);
+}
+
+setTimeout(createLoveBurst,1000);
+setInterval(createLoveBurst,5000);
+
+/* Mouse sparkle only on devices with a real fine pointer */
+if (window.matchMedia("(hover:hover) and (pointer:fine)").matches) {
+ let lastSparkle = 0;
+ document.addEventListener("mousemove", e => {
+  const now = Date.now();
+  if(now-lastSparkle<55) return;
+  lastSparkle=now;
+
+  const sparkle=document.createElement("span");
+  sparkle.className="mouse-sparkle";
+  sparkle.textContent=["✦","✧","✨","⋆"][Math.floor(Math.random()*4)];
+  sparkle.style.left=e.clientX+"px";
+  sparkle.style.top=e.clientY+"px";
+  document.body.appendChild(sparkle);
+  setTimeout(()=>sparkle.remove(),850);
+ });
+}
+
+/* =====================================
+   4. TOTALS AND DASHBOARD
+===================================== */
+
+function totals() {
+ const fund = funds.reduce((s,x)=>s+Number(x.amount||0),0);
+ const spentFund = expenses.filter(x=>x.source==="fund")
+  .reduce((s,x)=>s+Number(x.amount||0),0);
+ const spent = expenses.reduce((s,x)=>s+Number(x.amount||0),0);
  return {fund,spentFund,left:fund-spentFund,spent};
 }
 
-function render(){
+function render() {
  const t=totals();
  $("totalFund").textContent=money(t.fund);
  $("fundSpent").textContent=money(t.spentFund);
  $("fundLeft").textContent=money(t.left);
  $("totalSpent").textContent=money(t.spent);
 
- $("fundRows").innerHTML=funds.length?funds.map(x=>`
- <tr>
- <td>${escapeHTML(x.date)}</td><td>${escapeHTML(x.person)}</td>
- <td>${escapeHTML(x.note||"—")}</td><td>${money(x.amount)}</td>
- <td>${currentUser.uid===OWNER_UID?`<button class="danger" onclick="removeRecord('funds','${x.id}')">Xóa</button>`:""}</td>
- </tr>`).join(""):'<tr><td colspan="5">Chưa có dữ liệu</td></tr>';
+ $("summaryText").textContent =
+  "Chuyến đi có "+funds.length+" lượt góp quỹ và "+expenses.length+
+  " khoản chi. Tổng chi hiện tại: "+money(t.spent)+".";
 
- $("expenseRows").innerHTML=expenses.length?expenses.map(x=>`
- <tr>
- <td>${escapeHTML(x.date)}</td><td>${escapeHTML(x.desc)}</td>
- <td>${escapeHTML(x.payer)}</td><td>${x.source==="fund"?"Quỹ":"Tiền túi"}</td>
- <td>${x.members.map(escapeHTML).join(", ")}</td><td>${money(x.amount)}</td>
- <td><button class="danger" onclick="removeRecord('expenses','${x.id}')">Xóa</button></td>
- </tr>`).join(""):'<tr><td colspan="7">Chưa có dữ liệu</td></tr>';
-
+ renderFundRows();
+ renderExpenseRows();
  renderSettlement();
 }
 
-function escapeHTML(s){
- return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function renderFundRows() {
+ $("fundRows").innerHTML = funds.length ? funds.map(x=>`
+  <tr>
+   <td>${escapeHTML(x.date)}</td>
+   <td>${escapeHTML(x.person)}</td>
+   <td>${escapeHTML(x.note||"—")}</td>
+   <td>${money(x.amount)}</td>
+   <td>${isOwner()?`<button class="danger" onclick="removeRecord('funds','${escapeHTML(x.id)}')">Xóa</button>`:"—"}</td>
+  </tr>
+ `).join("") : '<tr><td colspan="5" class="empty">Chưa có khoản góp quỹ</td></tr>';
 }
 
-function renderSettlement(){
+function renderExpenseRows() {
+ $("expenseRows").innerHTML = expenses.length ? expenses.map(x=>`
+  <tr>
+   <td>${escapeHTML(x.date)}</td>
+   <td>${escapeHTML(x.desc)}</td>
+   <td>${escapeHTML(x.payer)}</td>
+   <td>${x.source==="fund"?"Quỹ chung":"Tiền túi"}</td>
+   <td>${(Array.isArray(x.members)?x.members:[]).map(escapeHTML).join(", ")}</td>
+   <td>${money(x.amount)}</td>
+   <td><button class="danger" onclick="removeRecord('expenses','${escapeHTML(x.id)}')">Xóa</button></td>
+  </tr>
+ `).join("") : '<tr><td colspan="7" class="empty">Chưa có khoản chi tiêu</td></tr>';
+}
+
+/* =====================================
+   5. SETTLEMENT CALCULATION
+===================================== */
+
+function renderSettlement() {
  const t=totals();
- let contributed={},personalPaid={},owed={};
+ const contributed={};
+ const personalPaid={};
+ const owed={};
+
  PEOPLE.forEach(p=>{
-  contributed[p]=funds.filter(x=>x.person===p).reduce((s,x)=>s+Number(x.amount),0);
-  personalPaid[p]=expenses.filter(x=>x.source==="personal"&&x.payer===p).reduce((s,x)=>s+Number(x.amount),0);
+  contributed[p]=funds.filter(x=>x.person===p)
+   .reduce((s,x)=>s+Number(x.amount||0),0);
+  personalPaid[p]=expenses.filter(x=>x.source==="personal"&&x.payer===p)
+   .reduce((s,x)=>s+Number(x.amount||0),0);
   owed[p]=0;
  });
+
  expenses.forEach(x=>{
-  const each=Number(x.amount)/x.members.length;
-  x.members.forEach(p=>owed[p]+=each);
+  const members=Array.isArray(x.members)
+   ? x.members.filter(p=>PEOPLE.includes(p)) : [];
+  if(!members.length) return;
+  const each=Number(x.amount||0)/members.length;
+  members.forEach(p=>owed[p]+=each);
  });
- PEOPLE.forEach(p=>{
-  const refund=t.fund>0?Math.max(0,t.left)*contributed[p]/t.fund:0;
-  const net=personalPaid[p]+contributed[p]-owed[p]-refund;
-  const status=net>=0?"Nhận lại":"Cần thanh toán";
-  const cls=net>=0?"good":"bad";
-  $("settlement").innerHTML+= "";
- });
+
  $("settlement").innerHTML=PEOPLE.map(p=>{
-  const refund=t.fund>0?Math.max(0,t.left)*contributed[p]/t.fund:0;
+  const refund=t.fund>0 ? t.left*contributed[p]/t.fund : 0;
   const net=personalPaid[p]+contributed[p]-owed[p]-refund;
+  const result=net>=0
+   ? `<strong class="good">Nhận lại ${money(net)}</strong>`
+   : `<strong class="bad">Cần thanh toán ${money(Math.abs(net))}</strong>`;
+
   return `<div class="person">
-  <h3>${p==="Ý"?"🌷":p==="Thoa"?"💙":"💚"} ${p}</h3>
-  <p>Đã góp quỹ: ${money(contributed[p])}<br>
-  Đã ứng tiền túi: ${money(personalPaid[p])}<br>
-  Phần chi phải chịu: ${money(owed[p])}<br>
-  Quỹ dư được hoàn: ${money(refund)}</p>
-  <strong class="${net>=0?"good":"bad"}">${net>=0?"Nhận lại ":"Cần thanh toán "}${money(Math.abs(net))}</strong>
+   <h3>${p==="Ý"?"🌷":p==="Thoa"?"💙":"💚"} ${p}</h3>
+   <p>
+    Đã góp quỹ: ${money(contributed[p])}<br>
+    Đã ứng tiền túi: ${money(personalPaid[p])}<br>
+    Phần chi phải chịu: ${money(owed[p])}<br>
+    Quỹ dư được hoàn: ${money(refund)}
+   </p>
+   ${result}
   </div>`;
  }).join("");
 }
 
-async function login(){
- try{
-  await auth.signInWithEmailAndPassword($("email").value.trim(),$("password").value);
-  message("loginMessage","");
- }catch(e){message("loginMessage","Không đăng nhập được: "+e.message);}
-}
+/* =====================================
+   6. LOGIN / LOGOUT
+===================================== */
 
-async function logout(){await auth.signOut();}
+$("loginForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ const button=$("loginButton");
+ button.disabled=true;
+ button.textContent="Đang đăng nhập...";
+ showMessage("");
+
+ try {
+  await auth.signInWithEmailAndPassword(
+   $("email").value.trim(),
+   $("password").value
+  );
+ } catch(err) {
+  showMessage("Không đăng nhập được: "+err.message);
+ } finally {
+  button.disabled=false;
+  button.textContent="Đăng nhập";
+ }
+});
+
+async function logout() {
+ try { await auth.signOut(); }
+ catch(e) { alert("Lỗi đăng xuất: "+e.message); }
+}
 
 auth.onAuthStateChanged(user=>{
  currentUser=user;
- if(stopFunds)stopFunds();
- if(stopExpenses)stopExpenses();
+
+ if(stopFunds){stopFunds();stopFunds=null;}
+ if(stopExpenses){stopExpenses();stopExpenses=null;}
+
  $("login").classList.toggle("hidden",!!user);
  $("app").classList.toggle("hidden",!user);
- if(!user)return;
+ $("loading").classList.add("hidden");
+
+ if(!user) {
+  funds=[];
+  expenses=[];
+  showMessage("");
+  return;
+ }
 
  $("welcome").textContent="Xin chào: "+user.email;
- $("fundTab").classList.toggle("hidden",user.uid!==OWNER_UID);
- $("fund").classList.toggle("hidden",user.uid!==OWNER_UID);
+ $("fundTab").classList.toggle("hidden",!isOwner());
 
- stopFunds=store.collection("funds").onSnapshot(s=>{
-  funds=s.docs.map(d=>({id:d.id,...d.data()}));
+ document.querySelectorAll(".tab").forEach(b=>{
+  b.classList.toggle("active",b.dataset.page==="home");
+ });
+ document.querySelectorAll(".page").forEach(p=>{
+  p.classList.toggle("hidden",p.id!=="home");
+ });
+
+ $("loading").classList.remove("hidden");
+
+ stopFunds=store.collection("funds").onSnapshot(snapshot=>{
+  funds=snapshot.docs.map(d=>({id:d.id,...d.data()}));
   funds.sort((a,b)=>(b.date||"").localeCompare(a.date||""));
   render();
- },e=>alert("Lỗi đọc quỹ: "+e.message));
+ },err=>{
+  alert("Không đọc được dữ liệu quỹ: "+err.message);
+ });
 
- stopExpenses=store.collection("expenses").onSnapshot(s=>{
-  expenses=s.docs.map(d=>({id:d.id,...d.data()}));
+ stopExpenses=store.collection("expenses").onSnapshot(snapshot=>{
+  expenses=snapshot.docs.map(d=>({id:d.id,...d.data()}));
   expenses.sort((a,b)=>(b.date||"").localeCompare(a.date||""));
   render();
- },e=>alert("Lỗi đọc chi tiêu: "+e.message));
+  $("loading").classList.add("hidden");
+ },err=>{
+  alert("Không đọc được dữ liệu chi tiêu: "+err.message);
+  $("loading").classList.add("hidden");
+ });
 });
 
-document.querySelectorAll(".tab").forEach(btn=>{
- btn.onclick=()=>{
-  document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b===btn));
-  document.querySelectorAll(".page").forEach(p=>p.classList.toggle("hidden",p.id!==btn.dataset.page));
- };
+/* =====================================
+   7. NAVIGATION
+===================================== */
+
+document.querySelectorAll(".tab").forEach(button=>{
+ button.addEventListener("click",()=>{
+  const page=button.dataset.page;
+  if(page==="fund"&&!isOwner()) return;
+
+  document.querySelectorAll(".tab").forEach(b=>{
+   b.classList.toggle("active",b===button);
+  });
+  document.querySelectorAll(".page").forEach(p=>{
+   p.classList.toggle("hidden",p.id!==page);
+  });
+ });
 });
 
-$("fundForm").onsubmit=async e=>{
+/* =====================================
+   8. ADD FUND
+===================================== */
+
+$("fundForm").addEventListener("submit",async e=>{
  e.preventDefault();
- if(!currentUser||currentUser.uid!==OWNER_UID)return alert("Chỉ Ý được nhập quỹ.");
+
+ if(!isOwner()) return alert("Chỉ Ý được nhập góp quỹ.");
+
  const amount=Number($("fundAmount").value);
- if(!amount||amount<=0)return alert("Số tiền không hợp lệ.");
- try{
+ if(!Number.isSafeInteger(amount)||amount<=0)
+  return alert("Số tiền không hợp lệ.");
+
+ try {
   await store.collection("funds").add({
-   date:$("fundDate").value,person:$("fundPerson").value,
-   amount,note:$("fundNote").value,
+   date:$("fundDate").value,
+   person:$("fundPerson").value,
+   amount,
+   note:$("fundNote").value.trim(),
    createdAt:firebase.firestore.FieldValue.serverTimestamp(),
    createdBy:currentUser.uid
   });
-  $("fundAmount").value="";$("fundNote").value="";
-  alert("Đã lưu khoản góp quỹ!");
- }catch(e){alert("Lỗi lưu quỹ: "+e.message);}
-};
 
-$("expenseForm").onsubmit=async e=>{
+  $("fundAmount").value="";
+  $("fundNote").value="";
+  alert("Đã lưu khoản góp quỹ thành công! 💗");
+ } catch(err) {
+  alert("Lỗi lưu góp quỹ: "+err.message);
+ }
+});
+
+/* =====================================
+   9. ADD EXPENSE
+===================================== */
+
+$("expenseForm").addEventListener("submit",async e=>{
  e.preventDefault();
- const members=[...document.querySelectorAll('input[name="member"]:checked')].map(x=>x.value);
- if(!members.length)return alert("Chọn ít nhất một người chịu khoản chi.");
+
+ const members=[...document.querySelectorAll('input[name="member"]:checked')]
+  .map(x=>x.value);
+
+ if(!members.length)
+  return alert("Vui lòng chọn ít nhất một người chịu chi phí.");
+
  const amount=Number($("amount").value);
- if(!amount||amount<=0)return alert("Số tiền không hợp lệ.");
- if($("source").value==="fund"&&amount>totals().left)
-  return alert("Quỹ không đủ tiền. Hãy kiểm tra số dư hoặc chọn Tiền túi.");
- try{
+ if(!Number.isSafeInteger(amount)||amount<=0)
+  return alert("Số tiền không hợp lệ.");
+
+ if($("source").value==="fund" && amount>totals().left)
+  return alert("Quỹ không đủ tiền. Hãy kiểm tra số dư hoặc chọn tiền túi.");
+
+ try {
   await store.collection("expenses").add({
-   date:$("expDate").value,category:$("category").value,
-   desc:$("description").value,amount,payer:$("payer").value,
-   source:$("source").value,members,note:$("expNote").value,
+   date:$("expDate").value,
+   category:$("category").value,
+   desc:$("description").value.trim(),
+   amount,
+   payer:$("payer").value,
+   source:$("source").value,
+   members,
+   note:$("expNote").value.trim(),
    createdAt:firebase.firestore.FieldValue.serverTimestamp(),
    createdBy:currentUser.uid
   });
-  $("description").value="";$("amount").value="";$("expNote").value="";
-  alert("Đã lưu khoản chi!");
- }catch(e){alert("Lỗi lưu chi tiêu: "+e.message);}
-};
 
-window.removeRecord=async(kind,id)=>{
- if(kind==="funds"&&currentUser.uid!==OWNER_UID)return alert("Chỉ Ý được xóa góp quỹ.");
- if(!confirm("Bạn chắc chắn muốn xóa giao dịch này?"))return;
- try{await store.collection(kind).doc(id).delete();}
- catch(e){alert("Không xóa được: "+e.message);}
-};
-
-function backup(){
- const data={funds,expenses,exportedAt:new Date().toISOString()};
- const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
- const a=document.createElement("a");
- a.href=URL.createObjectURL(blob);a.download="dalat-thu-chi-backup.json";a.click();
- URL.revokeObjectURL(a.href);
-}
-</script>
-</body>
-</html>
+  $("description").value="";
+  $("amount").value="";
+  $("exp
