@@ -23,6 +23,7 @@ nav{display:flex;gap:8px;overflow-x:auto;margin:20px 0;padding-bottom:5px}.prima
 input,select{width:100%;padding:11px;border:1px solid #e7d4dd;border-radius:10px;color:var(--ink);background:white}label{font-size:13px;font-weight:600;display:block;margin-bottom:6px}.field{margin-bottom:13px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.full{grid-column:1/-1}.checks{display:flex;gap:10px;flex-wrap:wrap}.checks label{background:var(--pale);padding:10px;border-radius:10px;margin:0}.checks input{width:auto;accent-color:var(--pink)}
 .hidden{display:none!important}.hint{font-size:13px;color:var(--muted);line-height:1.6}table{width:100%;border-collapse:collapse;min-width:550px;font-size:13px}th,td{text-align:left;padding:11px 8px;border-bottom:1px solid var(--line)}th{color:#936c7c}.tablewrap{overflow-x:auto}.balance{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.person{border:1px solid var(--line);padding:13px;border-radius:13px;min-width:0}.person h3{margin:0 0 10px}.person p{font-size:12px;line-height:1.8;color:var(--muted)}.good{color:var(--green)}.bad{color:var(--red)}
 #login{max-width:450px;margin:30px auto}#login h2{color:#80465e}.notice{background:#fff0f5;padding:13px;border-radius:12px;font-size:13px;margin-bottom:15px}footer{text-align:center;color:#a28d96;font-size:12px;padding:25px}.empty{text-align:center;color:var(--muted);padding:20px}.summary-line{display:flex;justify-content:space-between;gap:10px;margin:10px 0}#loginMessage{overflow-wrap:anywhere}
+.stay-card{background:linear-gradient(120deg,#fff0f5,#fff8f2);border:1px solid #f0d3df;border-radius:15px;padding:16px;margin-bottom:15px}.itinerary-list{display:grid;gap:12px}.itinerary-item{border:1px solid var(--line);border-radius:14px;padding:15px;background:#fff}.itinerary-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}.itinerary-date{font-weight:700;color:#9d4e70}.itinerary-kind{display:inline-block;background:var(--pale);color:#98516e;padding:5px 10px;border-radius:20px;font-size:12px;font-weight:700}.itinerary-details{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin-top:12px;font-size:13px}.itinerary-details div{overflow-wrap:anywhere}.itinerary-actions{display:flex;gap:7px;margin-top:12px}.itinerary-actions button{font-size:12px}@media(max-width:600px){.itinerary-details{grid-template-columns:1fr}}
 .love-overlay{position:fixed;inset:0;z-index:99999;background:rgba(65,30,48,.68);backdrop-filter:blur(9px);display:flex;align-items:center;justify-content:center;padding:18px}.love-overlay.hidden{display:none!important}
 .love-modal{width:min(440px,100%);background:linear-gradient(145deg,#fffafd,#ffe6ef);border:2px solid #f3b9ce;border-radius:25px;padding:30px 23px;text-align:center;box-shadow:0 20px 70px #3e152d55;animation:lovePop .45s cubic-bezier(.2,1.5,.5,1)}
 @keyframes lovePop{from{opacity:0;transform:scale(.65) translateY(25px)}to{opacity:1;transform:scale(1) translateY(0)}}.love-icon{font-size:54px;margin-bottom:13px;animation:heartBeat 1s infinite}@keyframes heartBeat{0%,100%{transform:scale(1)}50%{transform:scale(1.16)}}
@@ -59,7 +60,7 @@ input,select{width:100%;padding:11px;border:1px solid #e7d4dd;border-radius:10px
  <section class="stats">
   <div class="stat"><small>Tổng góp quỹ</small><strong id="totalFund">0 ₫</strong></div><div class="stat"><small>Đã chi từ quỹ</small><strong id="fundSpent">0 ₫</strong></div><div class="stat"><small>Quỹ còn lại</small><strong id="fundLeft">0 ₫</strong></div><div class="stat"><small>Tổng chi chuyến đi</small><strong id="totalSpent">0 ₫</strong></div>
  </section>
- <nav><button class="tab active" data-page="home">🏡 Tổng quan</button><button class="tab" data-page="fund" id="fundTab">💰 Góp quỹ</button><button class="tab" data-page="expense">🧾 Chi tiêu</button><button class="tab" data-page="history">📚 Lịch sử</button><button class="tab" data-page="settle">⚖️ Quyết toán</button></nav>
+ <nav><button class="tab active" data-page="home">🏡 Tổng quan</button><button class="tab" data-page="fund" id="fundTab">💰 Góp quỹ</button><button class="tab" data-page="expense">🧾 Chi tiêu</button><button class="tab" data-page="history">📚 Lịch sử</button><button class="tab" data-page="itinerary">📅 Lịch trình</button><button class="tab" data-page="settle">⚖️ Quyết toán</button></nav>
 
  <section id="home" class="page"><div class="card"><h2>🌲 Chào mừng đến Đà Lạt!</h2><p class="hint">Một chuyến đi, ba thành viên và thật nhiều kỷ niệm đẹp.</p><div class="balance"><div class="person"><h3>🌷 Ý</h3><p>Quản lý góp quỹ</p></div><div class="person"><h3>💙 Thoa</h3><p>Thành viên chuyến đi</p></div><div class="person"><h3>💚 Thắm</h3><p>Thành viên chuyến đi</p></div></div></div>
  <div class="card"><h3>📊 Tóm tắt chuyến đi</h3><div class="summary-line"><span>Tổng tiền đã góp</span><strong id="homeFund">0 ₫</strong></div><div class="summary-line"><span>Tổng chi tiêu</span><strong id="homeSpent">0 ₫</strong></div><div class="summary-line"><span>Tiền quỹ còn lại</span><strong id="homeLeft">0 ₫</strong></div></div></section>
@@ -87,6 +88,23 @@ input,select{width:100%;padding:11px;border:1px solid #e7d4dd;border-radius:10px
   <div class="card"><h2>🧾 Lịch sử chi tiêu</h2><div class="tablewrap"><table><thead><tr><th>Ngày</th><th>Nội dung</th><th>Người trả</th><th>Nguồn</th><th>Người chịu</th><th>Số tiền</th><th>Thao tác</th></tr></thead><tbody id="expenseRows"></tbody></table></div></div>
   <div class="card"><h3>📦 Sao lưu dữ liệu</h3><p class="hint">Tải bản sao lưu giao dịch về máy dưới dạng JSON.</p><button class="secondary" id="backupButton">Tải bản sao lưu</button></div>
  </section>
+ <section id="itinerary" class="page hidden">
+  <div class="stay-card"><h2>🏡 Homestay của tụi mình</h2><p class="hint">Thông tin nơi lưu trú được lưu chung để cả ba thành viên cùng xem.</p>
+   <form id="stayForm"><div class="grid"><div class="field"><label for="stayName">Tên Homestay</label><input id="stayName" maxlength="160" placeholder="Tên homestay"></div><div class="field"><label for="stayAddress">Địa chỉ Homestay</label><input id="stayAddress" maxlength="300" placeholder="Số nhà, đường, phường, Đà Lạt"></div></div><button class="primary" type="submit">💾 Lưu thông tin Homestay</button><span id="stayStatus" class="hint" style="margin-left:10px"></span></form>
+  </div>
+  <div class="card"><h2>🗓️ Thêm lịch trình</h2><p class="hint">Có thể chọn ngày bằng lịch hoặc tự nhập ngày theo định dạng ngày/tháng/năm (ví dụ 13/12/2026).</p>
+   <form id="itineraryForm"><div class="grid">
+    <div class="field"><label for="itineraryDate">Ngày (chọn trên lịch)</label><input id="itineraryDate" type="date"></div>
+    <div class="field"><label for="itineraryDateManual">Hoặc tự nhập ngày</label><input id="itineraryDateManual" type="text" inputmode="numeric" placeholder="dd/mm/yyyy"></div>
+    <div class="field"><label for="itineraryTime">Giờ</label><input id="itineraryTime" type="text" placeholder="Ví dụ: 08:30 hoặc 8h30" maxlength="30"></div>
+    <div class="field"><label for="itineraryType">Nội dung</label><select id="itineraryType"><option>Di Chuyển</option><option>Ăn Uống</option><option>Vui Chơi</option><option>Ngắm Cảnh</option><option>Checkin</option><option>Check Out</option></select></div>
+    <div class="field"><label for="itineraryPlace">Địa điểm</label><input id="itineraryPlace" maxlength="180" placeholder="Tên địa điểm / hoạt động"></div>
+    <div class="field"><label for="itineraryAddress">Địa chỉ</label><input id="itineraryAddress" maxlength="300" placeholder="Địa chỉ cụ thể"></div>
+    <div class="field full"><label for="itineraryTransport">Phương tiện di chuyển</label><input id="itineraryTransport" maxlength="160" placeholder="Ví dụ: Xe máy, taxi, đi bộ, xe đưa đón..."></div>
+   </div><button class="primary" id="itinerarySubmit" type="submit">＋ Thêm vào lịch trình</button><button class="secondary hidden" id="itineraryCancelEdit" type="button">Hủy chỉnh sửa</button></form>
+  </div>
+  <div class="card"><div class="itinerary-top"><h2>📍 Lịch trình chuyến đi</h2><span class="hint" id="itineraryCount">0 hoạt động</span></div><div id="itineraryList" class="itinerary-list"><div class="empty">Chưa có lịch trình. Thêm hoạt động đầu tiên nhé! 💗</div></div></div>
+ </section>
  <section id="settle" class="page hidden"><div class="card"><h2>⚖️ Quyết toán cuối chuyến</h2><p class="hint">Chi phí chia đều theo từng nhóm được chọn. Quỹ dư được hoàn theo tỷ lệ góp quỹ.</p><div id="settlement" class="balance"></div></div></section>
 </main>
 <footer>Made with ♡ for our Da Lat memories · Anh Như Ý</footer>
@@ -97,10 +115,21 @@ const firebaseConfig={apiKey:"AIzaSyD4lIfLUuutmh-doMs08zADHT7N6k6kGuY",authDomai
 const OWNER_UID="u7DJYcsAp8anEnIWOPKfeQrFNt23",PEOPLE=["Ý","Thoa","Thắm"];
 firebase.initializeApp(firebaseConfig);
 const auth=firebase.auth(),store=firebase.firestore();
-let currentUser=null,funds=[],expenses=[],stopFunds=null,stopExpenses=null;
+let currentUser=null,funds=[],expenses=[],itineraries=[],stayInfo={},stopFunds=null,stopExpenses=null,stopItinerary=null,stopStay=null,itineraryEditId=null;
 const $=id=>document.getElementById(id),money=n=>(Number(n)||0).toLocaleString("vi-VN")+" ₫";
 function localDate(){const d=new Date(),x=new Date(d.getTime()-d.getTimezoneOffset()*60000);return x.toISOString().slice(0,10)}
 function escapeHTML(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+const ITINERARY_TYPES=["Di Chuyển","Ăn Uống","Vui Chơi","Ngắm Cảnh","Checkin","Check Out"];
+function displayDate(value){if(!value)return "Chưa chọn ngày";const parts=String(value).split("-");return parts.length===3?`${parts[2]}/${parts[1]}/${parts[0]}`:value}
+function normalizeItineraryDate(){const manual=$("itineraryDateManual").value.trim(),picked=$("itineraryDate").value;if(manual){let m=manual.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/);if(m){const d=m[1].padStart(2,"0"),mo=m[2].padStart(2,"0"),y=m[3];const test=new Date(`${y}-${mo}-${d}T00:00:00`);if(test.getFullYear()===Number(y)&&test.getMonth()+1===Number(mo)&&test.getDate()===Number(d))return `${y}-${mo}-${d}`;return ""}if(/^\d{4}-\d{2}-\d{2}$/.test(manual))return manual;return ""}return picked}
+function clearItineraryForm(){itineraryEditId=null;$("itineraryForm").reset();$("itinerarySubmit").textContent="＋ Thêm vào lịch trình";$("itineraryCancelEdit").classList.add("hidden")}
+function renderItinerary(){
+ const sorted=[...itineraries].sort((a,b)=>(a.date||"").localeCompare(b.date||"")||(a.time||"").localeCompare(b.time||""));
+ $("itineraryCount").textContent=`${sorted.length} hoạt động`;
+ $("itineraryList").innerHTML=sorted.length?sorted.map(x=>`<article class="itinerary-item"><div class="itinerary-top"><div><div class="itinerary-date">📅 ${escapeHTML(displayDate(x.date))}${x.time?` · ${escapeHTML(x.time)}`:""}</div><h3 style="margin:8px 0">${escapeHTML(x.place||x.type||"Hoạt động")}</h3></div><span class="itinerary-kind">${escapeHTML(x.type||"Khác")}</span></div><div class="itinerary-details"><div>📍 <b>Địa điểm:</b> ${escapeHTML(x.place||"—")}</div><div>🏠 <b>Địa chỉ:</b> ${escapeHTML(x.address||"—")}</div><div>🚗 <b>Phương tiện:</b> ${escapeHTML(x.transport||"—")}</div></div><div class="itinerary-actions"><button class="secondary" data-itinerary-edit="${escapeHTML(x.id)}" type="button">✏️ Sửa</button><button class="danger" data-itinerary-delete="${escapeHTML(x.id)}" type="button">Xóa</button></div></article>`).join(""):'<div class="empty">Chưa có lịch trình. Thêm hoạt động đầu tiên nhé! 💗</div>';
+}
+function renderStay(){$("stayName").value=stayInfo.name||"";$("stayAddress").value=stayInfo.address||"";}
+
 $("fundDate").value=localDate();$("expDate").value=localDate();
 
 /* LOVE POPUP: standalone event delegation; does not depend on Firebase */
@@ -152,12 +181,14 @@ $("resetButton").addEventListener("click",async()=>{const email=$("email").value
 $("logoutButton").addEventListener("click",()=>auth.signOut());
 
 auth.onAuthStateChanged(user=>{
- currentUser=user;if(stopFunds){stopFunds();stopFunds=null}if(stopExpenses){stopExpenses();stopExpenses=null}
+ currentUser=user;if(stopFunds){stopFunds();stopFunds=null}if(stopExpenses){stopExpenses();stopExpenses=null}if(stopItinerary){stopItinerary();stopItinerary=null}if(stopStay){stopStay();stopStay=null}
  $("login").classList.toggle("hidden",!!user);$("app").classList.toggle("hidden",!user);
- if(!user){funds=[];expenses=[];return}
+ if(!user){funds=[];expenses=[];itineraries=[];stayInfo={};return}
  $("welcome").textContent="Xin chào: "+user.email;$("fundTab").classList.toggle("hidden",user.uid!==OWNER_UID);
  stopFunds=store.collection("funds").onSnapshot(s=>{funds=s.docs.map(d=>({id:d.id,...d.data()}));funds.sort((a,b)=>(b.date||"").localeCompare(a.date||""));render()},e=>alert("Không đọc được dữ liệu quỹ: "+e.message));
  stopExpenses=store.collection("expenses").onSnapshot(s=>{expenses=s.docs.map(d=>({id:d.id,...d.data()}));expenses.sort((a,b)=>(b.date||"").localeCompare(a.date||""));render()},e=>alert("Không đọc được dữ liệu chi tiêu: "+e.message));
+ stopItinerary=store.collection("itinerary").onSnapshot(s=>{itineraries=s.docs.map(d=>({id:d.id,...d.data()}));renderItinerary()},e=>alert("Không đọc được lịch trình: "+e.message+". Kiểm tra Firestore Rules cho itinerary."));
+ stopStay=store.collection("tripInfo").doc("lodging").onSnapshot(d=>{stayInfo=d.exists?d.data():{};renderStay()},e=>alert("Không đọc được Homestay: "+e.message+". Kiểm tra Firestore Rules cho tripInfo."));
 });
 
 /* NAVIGATION */
@@ -172,8 +203,20 @@ $("expenseForm").addEventListener("submit",async e=>{e.preventDefault();const me
 /* DELETE */
 document.addEventListener("click",async e=>{const b=e.target.closest("button[data-delete-kind]");if(!b)return;const kind=b.dataset.deleteKind,id=b.dataset.deleteId;if(kind==="funds"&&(!currentUser||currentUser.uid!==OWNER_UID))return alert("Chỉ Ý được xóa góp quỹ.");if(!confirm("Bạn chắc chắn muốn xóa giao dịch này?"))return;try{await store.collection(kind).doc(id).delete()}catch(err){alert("Không xóa được: "+err.message)}});
 
+/* HOMESTAY INFO */
+$("stayForm").addEventListener("submit",async e=>{e.preventDefault();if(!currentUser)return;try{await store.collection("tripInfo").doc("lodging").set({name:$("stayName").value.trim(),address:$("stayAddress").value.trim(),updatedAt:firebase.firestore.FieldValue.serverTimestamp(),updatedBy:currentUser.uid},{merge:true});$("stayStatus").textContent="Đã lưu thông tin Homestay ✓";setTimeout(()=>$("stayStatus").textContent="",3500)}catch(err){alert("Không lưu được Homestay: "+err.message)}});
+
+/* ITINERARY ADD / EDIT */
+$("itineraryForm").addEventListener("submit",async e=>{e.preventDefault();if(!currentUser)return;const date=normalizeItineraryDate();if(!date){alert("Ngày chưa đúng. Hãy chọn trên lịch hoặc nhập theo dạng dd/mm/yyyy, ví dụ 13/12/2026.");return}const data={date,time:$("itineraryTime").value.trim(),type:$("itineraryType").value,place:$("itineraryPlace").value.trim(),address:$("itineraryAddress").value.trim(),transport:$("itineraryTransport").value.trim(),updatedAt:firebase.firestore.FieldValue.serverTimestamp(),updatedBy:currentUser.uid};if(!data.place){alert("Vui lòng nhập địa điểm.");return}try{const wasEditing=!!itineraryEditId;if(wasEditing){await store.collection("itinerary").doc(itineraryEditId).update(data)}else{data.createdAt=firebase.firestore.FieldValue.serverTimestamp();data.createdBy=currentUser.uid;await store.collection("itinerary").add(data)}clearItineraryForm();alert(wasEditing?"Đã cập nhật lịch trình!":"Đã thêm hoạt động vào lịch trình!")}catch(err){alert("Không lưu được lịch trình: "+err.message+". Nếu báo Missing or insufficient permissions, cần cập nhật Firestore Rules.")}});
+$("itineraryCancelEdit").addEventListener("click",clearItineraryForm);
+document.addEventListener("click",async e=>{
+ const edit=e.target.closest("button[data-itinerary-edit]");if(edit){const item=itineraries.find(x=>x.id===edit.dataset.itineraryEdit);if(!item)return;itineraryEditId=item.id;$("itineraryDate").value=item.date||"";$("itineraryDateManual").value=item.date?displayDate(item.date):"";$("itineraryTime").value=item.time||"";$("itineraryType").value=ITINERARY_TYPES.includes(item.type)?item.type:"Di Chuyển";$("itineraryPlace").value=item.place||"";$("itineraryAddress").value=item.address||"";$("itineraryTransport").value=item.transport||"";$("itinerarySubmit").textContent="💾 Lưu thay đổi";$("itineraryCancelEdit").classList.remove("hidden");$("itineraryForm").scrollIntoView({behavior:"smooth",block:"start"});return}
+ const del=e.target.closest("button[data-itinerary-delete]");if(del){if(!confirm("Xóa hoạt động này khỏi lịch trình?"))return;try{await store.collection("itinerary").doc(del.dataset.itineraryDelete).delete()}catch(err){alert("Không xóa được lịch trình: "+err.message)}}
+});
+$("itineraryDate").addEventListener("change",()=>{$("itineraryDateManual").value=""});
+
 /* BACKUP */
-$("backupButton").addEventListener("click",()=>{const blob=new Blob([JSON.stringify({funds,expenses,exportedAt:new Date().toISOString()},null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="dalat-thu-chi-backup.json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)});
+$("backupButton").addEventListener("click",()=>{const blob=new Blob([JSON.stringify({funds,expenses,itineraries,stayInfo,exportedAt:new Date().toISOString()},null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="dalat-thu-chi-backup.json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)});
 </script>
 </body>
 </html>
