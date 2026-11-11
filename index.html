@@ -13,7 +13,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <style>
 :root{--pink:#d66e91;--dark:#a34c70;--pale:#fff0f5;--ink:#49333e;--muted:#927e87;--line:#f0dce4;--green:#438b68;--red:#c65c6e}
-*{box-sizing:border-box}body{margin:0;background:var(--site-bg,#fff9fb);color:var(--ink);font-family:"Be Vietnam Pro",Arial,sans-serif;transition:background .35s ease}button,input,select{font:inherit}button{cursor:pointer}
+*{box-sizing:border-box}body{margin:0;background:var(--site-bg,#fff9fb);color:var(--ink);font-family:"Be Vietnam Pro",Arial,sans-serif;transition:background .35s ease}button,input,select,textarea{font:inherit}button{cursor:pointer}
 header{background:var(--site-header-bg,linear-gradient(120deg,#f6dce6,#fff0e7));padding:30px 18px;transition:background .35s ease}.wrap{max-width:1050px;margin:auto}
 h1{font-family:"Noto Serif",Georgia,serif;font-size:clamp(30px,5vw,45px);line-height:1.35;letter-spacing:0;word-spacing:0;color:#80465e;margin:10px 0}.sub{color:#886c78;font-size:14px}
 main{max-width:1050px;margin:22px auto;padding:0 15px 40px}.card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:18px;margin-bottom:15px;box-shadow:0 6px 24px #9d657010}
@@ -68,10 +68,10 @@ nav{display:flex;gap:8px;overflow-x:auto;margin:20px 0;padding:10px 8px 12px;bac
  #extraSticker{width:clamp(125px,36vw,185px);max-width:46vw;max-height:32vh}
 }
 @media(prefers-reduced-motion:reduce){#randomQuoteSticker.show,#randomQuoteSticker.hide,.quote-avatar,.quote-bubble,#extraSticker.show,#extraSticker.hide,.tab{animation:none;transition:none}}
-input,select{width:100%;padding:11px;border:1px solid #e7d4dd;border-radius:10px;color:var(--ink);background:white}label{font-size:13px;font-weight:600;display:block;margin-bottom:6px}.field{margin-bottom:13px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.full{grid-column:1/-1}.checks{display:flex;gap:10px;flex-wrap:wrap}.checks label{background:var(--pale);padding:10px;border-radius:10px;margin:0}.checks input{width:auto;accent-color:var(--pink)}
-.hidden{display:none!important}.viewer-mode .write-only{display:none!important}.hint{font-size:13px;color:var(--muted);line-height:1.6}table{width:100%;border-collapse:collapse;min-width:550px;font-size:13px}th,td{text-align:left;padding:11px 8px;border-bottom:1px solid var(--line)}th{color:#936c7c}.tablewrap{overflow-x:auto}.balance{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.person{border:1px solid var(--line);padding:13px;border-radius:13px;min-width:0}.person h3{margin:0 0 10px}.person p{font-size:12px;line-height:1.8;color:var(--muted)}.good{color:var(--green)}.bad{color:var(--red)}
+input,select,textarea{width:100%;padding:11px;border:1px solid #e7d4dd;border-radius:10px;color:var(--ink);background:white}textarea{resize:vertical;min-height:76px;line-height:1.5}label{font-size:13px;font-weight:600;display:block;margin-bottom:6px}.field{margin-bottom:13px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.full{grid-column:1/-1}.checks{display:flex;gap:10px;flex-wrap:wrap}.checks label{background:var(--pale);padding:10px;border-radius:10px;margin:0}.checks input{width:auto;accent-color:var(--pink)}
+.hidden{display:none!important}.viewer-mode .write-only{display:none!important}.hint{font-size:13px;color:var(--muted);line-height:1.6}table{width:100%;border-collapse:collapse;min-width:550px;font-size:13px}th,td{text-align:left;padding:11px 8px;border-bottom:1px solid var(--line)}th{color:#936c7c}.tablewrap{overflow-x:auto}.balance{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.person{border:1px solid var(--line);padding:13px;border-radius:13px;min-width:0}.person h3{margin:0 0 10px}.person p{font-size:12px;line-height:1.8;color:var(--muted)}.transfer-panel{grid-column:1/-1;margin-top:8px;padding:16px;border:1px solid #efd5df;border-radius:14px;background:linear-gradient(135deg,#fff8fb,#fffdf9)}.transfer-panel h3{margin:0 0 6px;color:#80465e}.transfer-list{display:grid;gap:9px;margin-top:12px}.transfer-row{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid #f0dce4;border-radius:11px;background:#fff;min-width:0}.transfer-number{display:grid;place-items:center;flex:0 0 27px;height:27px;border-radius:50%;background:#fce8ef;color:#98536d;font-size:12px;font-weight:700}.transfer-copy{display:flex;align-items:center;gap:6px;flex:1;min-width:0;flex-wrap:wrap;font-size:13px}.transfer-copy span{color:var(--muted)}.transfer-amount{color:#438b68;white-space:nowrap;font-size:14px}.good{color:var(--green)}.bad{color:var(--red)}
 #login{max-width:450px;margin:30px auto}#login h2{color:#80465e}.notice{background:#fff0f5;padding:13px;border-radius:12px;font-size:13px;margin-bottom:15px}footer{text-align:center;color:#a28d96;font-size:12px;padding:25px}.empty{text-align:center;color:var(--muted);padding:20px}.summary-line{display:flex;justify-content:space-between;gap:10px;margin:10px 0}#loginMessage{overflow-wrap:anywhere}
-.stay-card{background:linear-gradient(120deg,#fff0f5,#fff8f2);border:1px solid #f0d3df;border-radius:15px;padding:16px;margin-bottom:15px}.itinerary-list{display:grid;gap:12px}.itinerary-item{border:1px solid var(--line);border-radius:14px;padding:15px;background:#fff}.itinerary-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}.itinerary-date{font-weight:700;color:#9d4e70}.itinerary-kind{display:inline-block;background:var(--pale);color:#98516e;padding:5px 10px;border-radius:20px;font-size:12px;font-weight:700}.itinerary-details{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin-top:12px;font-size:13px}.itinerary-details div{overflow-wrap:anywhere}.itinerary-actions{display:flex;gap:7px;margin-top:12px}.itinerary-actions button{font-size:12px}@media(max-width:600px){.itinerary-details{grid-template-columns:1fr}}
+.stay-card{background:linear-gradient(120deg,#fff0f5,#fff8f2);border:1px solid #f0d3df;border-radius:15px;padding:16px;margin-bottom:15px}.itinerary-list{display:grid;gap:12px}.itinerary-item{border:1px solid var(--line);border-radius:14px;padding:15px;background:#fff}.itinerary-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}.itinerary-date{font-weight:700;color:#9d4e70}.itinerary-kind{display:inline-block;background:var(--pale);color:#98516e;padding:5px 10px;border-radius:20px;font-size:12px;font-weight:700}.itinerary-details{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin-top:12px;font-size:13px}.itinerary-details div{overflow-wrap:anywhere}.itinerary-note{grid-column:1/-1;background:#fff7fa;border:1px dashed #edcfdb;border-radius:9px;padding:9px 10px;color:#795b68;white-space:pre-wrap}.itinerary-actions{display:flex;gap:7px;margin-top:12px}.itinerary-actions button{font-size:12px}@media(max-width:600px){.itinerary-details{grid-template-columns:1fr}.transfer-row{align-items:flex-start;flex-wrap:wrap}.transfer-amount{margin-left:37px}}
 .love-overlay{position:fixed;inset:0;z-index:99999;background:rgba(65,30,48,.68);backdrop-filter:blur(9px);display:flex;align-items:center;justify-content:center;padding:18px}.love-overlay.hidden{display:none!important}
 .love-modal{width:min(440px,100%);background:linear-gradient(145deg,#fffafd,#ffe6ef);border:2px solid #f3b9ce;border-radius:25px;padding:30px 23px;text-align:center;box-shadow:0 20px 70px #3e152d55;animation:lovePop .45s cubic-bezier(.2,1.5,.5,1)}
 @keyframes lovePop{from{opacity:0;transform:scale(.65) translateY(25px)}to{opacity:1;transform:scale(1) translateY(0)}}.love-icon{font-size:54px;margin-bottom:13px;animation:heartBeat 1s infinite}@keyframes heartBeat{0%,100%{transform:scale(1)}50%{transform:scale(1.16)}}
@@ -149,6 +149,7 @@ input,select{width:100%;padding:11px;border:1px solid #e7d4dd;border-radius:10px
     <div class="field"><label for="itineraryPlace">Địa điểm</label><input id="itineraryPlace" maxlength="180" placeholder="Tên địa điểm / hoạt động"></div>
     <div class="field"><label for="itineraryAddress">Địa chỉ</label><input id="itineraryAddress" maxlength="300" placeholder="Địa chỉ cụ thể"></div>
     <div class="field full"><label for="itineraryTransport">Phương tiện di chuyển</label><input id="itineraryTransport" maxlength="160" placeholder="Ví dụ: Xe máy, taxi, đi bộ, xe đưa đón..."></div>
+    <div class="field full"><label for="itineraryNote">📝 Ghi chú lịch trình</label><textarea id="itineraryNote" rows="3" maxlength="1000" placeholder="Ví dụ: Đặt bàn trước, mang áo khoác, giờ tập trung, lưu ý vé tham quan..."></textarea></div>
    </div><button class="primary" id="itinerarySubmit" type="submit">＋ Thêm vào lịch trình</button><button class="secondary hidden" id="itineraryCancelEdit" type="button">Hủy chỉnh sửa</button></form>
   </div>
   <div class="card"><div class="itinerary-top"><h2>📍 Lịch trình chuyến đi</h2><span class="hint" id="itineraryCount">0 hoạt động</span></div><div id="itineraryList" class="itinerary-list"><div class="empty">Chưa có lịch trình. Thêm hoạt động đầu tiên nhé! 💗</div></div></div>
@@ -183,7 +184,7 @@ function clearItineraryForm(){itineraryEditId=null;$("itineraryForm").reset();$(
 function renderItinerary(){
  const sorted=[...itineraries].sort((a,b)=>(a.date||"").localeCompare(b.date||"")||(a.time||"").localeCompare(b.time||""));
  $("itineraryCount").textContent=`${sorted.length} hoạt động`;
- $("itineraryList").innerHTML=sorted.length?sorted.map(x=>`<article class="itinerary-item"><div class="itinerary-top"><div><div class="itinerary-date">📅 ${escapeHTML(displayDate(x.date))}${x.time?` · ${escapeHTML(x.time)}`:""}</div><h3 style="margin:8px 0">${escapeHTML(x.place||x.type||"Hoạt động")}</h3></div><span class="itinerary-kind">${escapeHTML(x.type||"Khác")}</span></div><div class="itinerary-details"><div>📍 <b>Địa điểm:</b> ${escapeHTML(x.place||"—")}</div><div>🏠 <b>Địa chỉ:</b> ${escapeHTML(x.address||"—")}</div><div>🚗 <b>Phương tiện:</b> ${escapeHTML(x.transport||"—")}</div></div>${isViewer()?"":`<div class="itinerary-actions"><button class="secondary" data-itinerary-edit="${escapeHTML(x.id)}" type="button">✏️ Sửa</button><button class="danger" data-itinerary-delete="${escapeHTML(x.id)}" type="button">Xóa</button></div>`}</article>`).join(""):'<div class="empty">Chưa có lịch trình. Thêm hoạt động đầu tiên nhé! 💗</div>';
+ $("itineraryList").innerHTML=sorted.length?sorted.map(x=>`<article class="itinerary-item"><div class="itinerary-top"><div><div class="itinerary-date">📅 ${escapeHTML(displayDate(x.date))}${x.time?` · ${escapeHTML(x.time)}`:""}</div><h3 style="margin:8px 0">${escapeHTML(x.place||x.type||"Hoạt động")}</h3></div><span class="itinerary-kind">${escapeHTML(x.type||"Khác")}</span></div><div class="itinerary-details"><div>📍 <b>Địa điểm:</b> ${escapeHTML(x.place||"—")}</div><div>🏠 <b>Địa chỉ:</b> ${escapeHTML(x.address||"—")}</div><div>🚗 <b>Phương tiện:</b> ${escapeHTML(x.transport||"—")}</div><div class="itinerary-note">📝 <b>Ghi chú:</b> ${escapeHTML(x.note||"—")}</div></div>${isViewer()?"":`<div class="itinerary-actions"><button class="secondary" data-itinerary-edit="${escapeHTML(x.id)}" type="button">✏️ Sửa</button><button class="danger" data-itinerary-delete="${escapeHTML(x.id)}" type="button">Xóa</button></div>`}</article>`).join(""):'<div class="empty">Chưa có lịch trình. Thêm hoạt động đầu tiên nhé! 💗</div>';
 }
 function renderStay(){$("stayName").value=stayInfo.name||"";$("stayAddress").value=stayInfo.address||"";}
 
@@ -226,10 +227,67 @@ function render(){
  renderSettlement();
 }
 function renderSettlement(){
- const t=totals(),contributed={},personalPaid={},owed={};
- PEOPLE.forEach(p=>{contributed[p]=funds.filter(x=>x.person===p).reduce((s,x)=>s+Number(x.amount||0),0);personalPaid[p]=expenses.filter(x=>x.source==="personal"&&x.payer===p).reduce((s,x)=>s+Number(x.amount||0),0);owed[p]=0});
- expenses.forEach(x=>{const m=Array.isArray(x.members)?x.members.filter(p=>PEOPLE.includes(p)):[];if(!m.length)return;const each=Number(x.amount||0)/m.length;m.forEach(p=>owed[p]+=each)});
- $("settlement").innerHTML=PEOPLE.map(p=>{const refund=t.fund>0?Math.max(0,t.left)*contributed[p]/t.fund:0,net=personalPaid[p]+contributed[p]-owed[p]-refund;return `<div class="person"><h3>${p==="Ý"?"🌷":p==="Thoa"?"💙":"💚"} ${p}</h3><p>Đã góp quỹ: ${money(contributed[p])}<br>Đã ứng tiền túi: ${money(personalPaid[p])}<br>Phần chi phải chịu: ${money(owed[p])}<br>Quỹ dư được hoàn: ${money(refund)}</p><strong class="${net>=0?"good":"bad"}">${net>=0?"Nhận lại ":"Cần thanh toán "}${money(Math.abs(net))}</strong></div>`}).join("");
+ const t=totals(),contributed={},personalPaid={},owed={},netByPerson={};
+ PEOPLE.forEach(p=>{
+   contributed[p]=funds.filter(x=>x.person===p).reduce((s,x)=>s+Number(x.amount||0),0);
+   personalPaid[p]=expenses.filter(x=>x.source==="personal"&&x.payer===p).reduce((s,x)=>s+Number(x.amount||0),0);
+   owed[p]=0;
+ });
+ expenses.forEach(x=>{
+   const members=Array.isArray(x.members)?x.members.filter(p=>PEOPLE.includes(p)):[];
+   if(!members.length)return;
+   const each=Number(x.amount||0)/members.length;
+   members.forEach(p=>owed[p]+=each);
+ });
+
+ // Positive net = should receive money; negative net = should pay money.
+ PEOPLE.forEach(p=>{
+   const refund=t.fund>0?Math.max(0,t.left)*contributed[p]/t.fund:0;
+   netByPerson[p]=Math.round(personalPaid[p]+contributed[p]-owed[p]-refund);
+ });
+ // Reconcile possible one-dong rounding differences so transfers balance exactly.
+ const roundingTotal=Object.values(netByPerson).reduce((s,n)=>s+n,0);
+ if(roundingTotal!==0){
+   const target=PEOPLE.reduce((best,p)=>Math.abs(netByPerson[p])>Math.abs(netByPerson[best])?p:best,PEOPLE[0]);
+   netByPerson[target]-=roundingTotal;
+ }
+
+ $("settlement").innerHTML=
+   PEOPLE.map(p=>{
+     const refund=t.fund>0?Math.max(0,t.left)*contributed[p]/t.fund:0;
+     const net=netByPerson[p];
+     return `<div class="person">
+       <h3>${p==="Ý"?"🌷":p==="Thoa"?"💙":"💚"} ${p}</h3>
+       <p>Đã góp quỹ: ${money(contributed[p])}<br>
+       Đã ứng tiền túi: ${money(personalPaid[p])}<br>
+       Phần chi phải chịu: ${money(owed[p])}<br>
+       Quỹ dư được hoàn: ${money(refund)}</p>
+       <strong class="${net>=0?"good":"bad"}">${net>=0?"Nhận lại ":"Cần thanh toán "}${money(Math.abs(net))}</strong>
+     </div>`;
+   }).join("");
+
+ const debtors=PEOPLE.map(p=>({person:p,amount:Math.max(0,-netByPerson[p])})).filter(x=>x.amount>0);
+ const creditors=PEOPLE.map(p=>({person:p,amount:Math.max(0,netByPerson[p])})).filter(x=>x.amount>0);
+ const transfers=[];
+ let di=0,ci=0;
+ while(di<debtors.length&&ci<creditors.length){
+   const amount=Math.min(debtors[di].amount,creditors[ci].amount);
+   if(amount>0)transfers.push({from:debtors[di].person,to:creditors[ci].person,amount});
+   debtors[di].amount-=amount;
+   creditors[ci].amount-=amount;
+   if(debtors[di].amount===0)di++;
+   if(creditors[ci].amount===0)ci++;
+ }
+ const transferHTML=transfers.length
+   ?transfers.map((x,i)=>`<div class="transfer-row"><span class="transfer-number">${i+1}</span><div class="transfer-copy"><strong>${escapeHTML(x.from)}</strong><span>chuyển cho</span><strong>${escapeHTML(x.to)}</strong></div><strong class="transfer-amount">${money(x.amount)}</strong></div>`).join("")
+   :'<div class="empty">Hiện chưa có khoản chuyển tiền giữa các thành viên. 💗</div>';
+ $("settlement").insertAdjacentHTML("beforeend",`
+   <div class="transfer-panel">
+     <h3>💸 Bảng chuyển tiền quyết toán</h3>
+     <p class="hint">Gợi ý ai cần chuyển cho ai và số tiền tương ứng, dựa trên các khoản góp quỹ, ứng tiền túi và phần chi mỗi người phải chịu.</p>
+     <div class="transfer-list">${transferHTML}</div>
+   </div>
+ `);
 }
 
 /* LOGIN */
@@ -311,10 +369,10 @@ document.addEventListener("click",async e=>{const b=e.target.closest("button[dat
 $("stayForm").addEventListener("submit",async e=>{e.preventDefault();if(!currentUser||isViewer())return;try{await store.collection("tripInfo").doc("lodging").set({name:$("stayName").value.trim(),address:$("stayAddress").value.trim(),updatedAt:firebase.firestore.FieldValue.serverTimestamp(),updatedBy:currentUser.uid},{merge:true});$("stayStatus").textContent="Đã lưu thông tin Homestay ✓";setTimeout(()=>$("stayStatus").textContent="",3500)}catch(err){alert("Không lưu được Homestay: "+err.message)}});
 
 /* ITINERARY ADD / EDIT */
-$("itineraryForm").addEventListener("submit",async e=>{e.preventDefault();if(!currentUser||isViewer())return;const date=normalizeItineraryDate();if(!date){alert("Ngày chưa đúng. Hãy chọn trên lịch hoặc nhập theo dạng dd/mm/yyyy, ví dụ 13/12/2026.");return}const data={date,time:$("itineraryTime").value.trim(),type:$("itineraryType").value,place:$("itineraryPlace").value.trim(),address:$("itineraryAddress").value.trim(),transport:$("itineraryTransport").value.trim(),updatedAt:firebase.firestore.FieldValue.serverTimestamp(),updatedBy:currentUser.uid};if(!data.place){alert("Vui lòng nhập địa điểm.");return}try{const wasEditing=!!itineraryEditId;if(wasEditing){await store.collection("itinerary").doc(itineraryEditId).update(data)}else{data.createdAt=firebase.firestore.FieldValue.serverTimestamp();data.createdBy=currentUser.uid;await store.collection("itinerary").add(data)}clearItineraryForm();alert(wasEditing?"Đã cập nhật lịch trình!":"Đã thêm hoạt động vào lịch trình!")}catch(err){alert("Không lưu được lịch trình: "+err.message+". Nếu báo Missing or insufficient permissions, cần cập nhật Firestore Rules.")}});
+$("itineraryForm").addEventListener("submit",async e=>{e.preventDefault();if(!currentUser||isViewer())return;const date=normalizeItineraryDate();if(!date){alert("Ngày chưa đúng. Hãy chọn trên lịch hoặc nhập theo dạng dd/mm/yyyy, ví dụ 13/12/2026.");return}const data={date,time:$("itineraryTime").value.trim(),type:$("itineraryType").value,place:$("itineraryPlace").value.trim(),address:$("itineraryAddress").value.trim(),transport:$("itineraryTransport").value.trim(),note:$("itineraryNote").value.trim(),updatedAt:firebase.firestore.FieldValue.serverTimestamp(),updatedBy:currentUser.uid};if(!data.place){alert("Vui lòng nhập địa điểm.");return}try{const wasEditing=!!itineraryEditId;if(wasEditing){await store.collection("itinerary").doc(itineraryEditId).update(data)}else{data.createdAt=firebase.firestore.FieldValue.serverTimestamp();data.createdBy=currentUser.uid;await store.collection("itinerary").add(data)}clearItineraryForm();alert(wasEditing?"Đã cập nhật lịch trình!":"Đã thêm hoạt động vào lịch trình!")}catch(err){alert("Không lưu được lịch trình: "+err.message+". Nếu báo Missing or insufficient permissions, cần cập nhật Firestore Rules.")}});
 $("itineraryCancelEdit").addEventListener("click",clearItineraryForm);
 document.addEventListener("click",async e=>{
- const edit=e.target.closest("button[data-itinerary-edit]");if(edit&&isViewer())return;if(edit){const item=itineraries.find(x=>x.id===edit.dataset.itineraryEdit);if(!item)return;itineraryEditId=item.id;$("itineraryDate").value=item.date||"";$("itineraryDateManual").value=item.date?displayDate(item.date):"";$("itineraryTime").value=item.time||"";$("itineraryType").value=ITINERARY_TYPES.includes(item.type)?item.type:"Di Chuyển";$("itineraryPlace").value=item.place||"";$("itineraryAddress").value=item.address||"";$("itineraryTransport").value=item.transport||"";$("itinerarySubmit").textContent="💾 Lưu thay đổi";$("itineraryCancelEdit").classList.remove("hidden");$("itineraryForm").scrollIntoView({behavior:"smooth",block:"start"});return}
+ const edit=e.target.closest("button[data-itinerary-edit]");if(edit&&isViewer())return;if(edit){const item=itineraries.find(x=>x.id===edit.dataset.itineraryEdit);if(!item)return;itineraryEditId=item.id;$("itineraryDate").value=item.date||"";$("itineraryDateManual").value=item.date?displayDate(item.date):"";$("itineraryTime").value=item.time||"";$("itineraryType").value=ITINERARY_TYPES.includes(item.type)?item.type:"Di Chuyển";$("itineraryPlace").value=item.place||"";$("itineraryAddress").value=item.address||"";$("itineraryTransport").value=item.transport||"";$("itineraryNote").value=item.note||"";$("itinerarySubmit").textContent="💾 Lưu thay đổi";$("itineraryCancelEdit").classList.remove("hidden");$("itineraryForm").scrollIntoView({behavior:"smooth",block:"start"});return}
  const del=e.target.closest("button[data-itinerary-delete]");if(del&&isViewer())return;if(del){if(!confirm("Xóa hoạt động này khỏi lịch trình?"))return;try{await store.collection("itinerary").doc(del.dataset.itineraryDelete).delete()}catch(err){alert("Không xóa được lịch trình: "+err.message)}}
 });
 $("itineraryDate").addEventListener("change",()=>{$("itineraryDateManual").value=""});
