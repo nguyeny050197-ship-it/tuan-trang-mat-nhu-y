@@ -73,13 +73,12 @@ input,select,textarea{width:100%;padding:11px;border:1px solid #e7d4dd;border-ra
 #login{max-width:450px;margin:30px auto}#login h2{color:#80465e}.notice{background:#fff0f5;padding:13px;border-radius:12px;font-size:13px;margin-bottom:15px}footer{text-align:center;color:#a28d96;font-size:12px;padding:25px}.empty{text-align:center;color:var(--muted);padding:20px}.summary-line{display:flex;justify-content:space-between;gap:10px;margin:10px 0}#loginMessage{overflow-wrap:anywhere}
 .stay-card{background:linear-gradient(120deg,#fff0f5,#fff8f2);border:1px solid #f0d3df;border-radius:15px;padding:16px;margin-bottom:15px}.itinerary-list{display:grid;gap:12px}.itinerary-item{border:1px solid var(--itinerary-card-border,var(--line));border-radius:14px;padding:15px;background:var(--itinerary-card-bg,#fff);transition:background .25s ease,border-color .25s ease}.itinerary-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}.itinerary-heading{align-items:center;gap:10px}.itinerary-date{font-weight:700;color:#9d4e70}.itinerary-kind{display:inline-block;background:var(--pale);color:#98516e;padding:8px 14px;border-radius:22px;font-size:14px;font-weight:800;line-height:1.2;white-space:nowrap}.itinerary-details{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin-top:12px;font-size:13px}.itinerary-details div{overflow-wrap:anywhere}.itinerary-note{grid-column:1/-1;background:#fff7fa;border:1px dashed #edcfdb;border-radius:9px;padding:9px 10px;color:#795b68;white-space:pre-wrap}.itinerary-actions{display:flex;gap:7px;margin-top:12px}.itinerary-actions button{font-size:12px}@media(max-width:600px){.itinerary-details{grid-template-columns:1fr}.itinerary-heading{align-items:center}.itinerary-kind{font-size:13px;padding:7px 11px}.transfer-row{align-items:flex-start;flex-wrap:wrap}.transfer-amount{margin-left:37px}}
 /* Dấu mộc kỷ niệm cho lịch trình đã hoàn thành */
-.itinerary-item{position:relative;overflow:hidden}
-.itinerary-completion-stamps{display:flex;justify-content:flex-end;align-items:center;gap:4px;min-height:0;margin-top:8px;flex-wrap:wrap}
-.itinerary-completion-stamps img{display:block;width:clamp(76px,10vw,112px);height:auto;max-height:108px;object-fit:contain;filter:drop-shadow(0 3px 3px #8e242422);opacity:.94;transform-origin:center;pointer-events:none}
-.itinerary-completion-stamps img:nth-child(1){transform:rotate(-9deg)}
-.itinerary-completion-stamps img:nth-child(2){transform:rotate(6deg) translateY(2px)}
-.itinerary-completion-stamps img:nth-child(3){transform:rotate(-3deg) translateY(-2px)}
-@media(max-width:600px){.itinerary-completion-stamps{gap:0}.itinerary-completion-stamps img{width:clamp(66px,23vw,88px);max-height:84px}}
+/* Dấu mộc được rải ngẫu nhiên trên toàn thẻ lịch trình; có thể đè lên nội dung */
+.itinerary-item{position:relative;overflow:visible;isolation:isolate}
+.itinerary-completion-stamps{position:absolute;inset:0;z-index:5;pointer-events:none}
+.itinerary-completion-stamps img{position:absolute;display:block;width:clamp(116px,14vw,158px);height:auto;max-height:none;object-fit:contain;filter:drop-shadow(0 4px 5px #8e242455);opacity:.96;transform-origin:center;pointer-events:none;will-change:left,top}
+@media(max-width:600px){.itinerary-completion-stamps img{width:clamp(98px,29vw,124px)}}
+
 
 .love-overlay{position:fixed;inset:0;z-index:99999;background:rgba(65,30,48,.68);backdrop-filter:blur(9px);display:flex;align-items:center;justify-content:center;padding:18px}.love-overlay.hidden{display:none!important}
 .love-modal{width:min(440px,100%);background:linear-gradient(145deg,#fffafd,#ffe6ef);border:2px solid #f3b9ce;border-radius:25px;padding:30px 23px;text-align:center;box-shadow:0 20px 70px #3e152d55;animation:lovePop .45s cubic-bezier(.2,1.5,.5,1)}
@@ -189,15 +188,32 @@ const ITINERARY_TYPES=["Di Chuyển","Ăn Uống","Vui Chơi","Ngắm Cảnh","C
 function displayDate(value){if(!value)return "Chưa chọn ngày";const parts=String(value).split("-");return parts.length===3?`${parts[2]}/${parts[1]}/${parts[0]}`:value}
 function normalizeItineraryDate(){return $("itineraryDate").value}
 function clearItineraryForm(){itineraryEditId=null;$("itineraryForm").reset();$("itinerarySubmit").textContent="＋ Thêm vào lịch trình";$("itineraryCancelEdit").classList.add("hidden")}
+function itineraryDateISO(value){
+ // Accept the ISO format saved by the date picker, Vietnamese dd/mm/yyyy,
+ // Date objects, and Firestore Timestamp values from older itinerary records.
+ if(value&&typeof value.toDate==="function")value=value.toDate();
+ if(value&&typeof value==="object"&&typeof value.seconds==="number")value=new Date(value.seconds*1000);
+ if(value instanceof Date&&!Number.isNaN(value.getTime())){
+  const y=value.getFullYear(),m=String(value.getMonth()+1).padStart(2,"0"),d=String(value.getDate()).padStart(2,"0");
+  return `${y}-${m}-${d}`;
+ }
+ const raw=String(value??"").trim();
+ let m=raw.match(/^(\d{4})-(\d{1,2})-(\d{1,2})(?:$|T)/);
+ if(m){const y=Number(m[1]),mo=Number(m[2]),day=Number(m[3]);const check=new Date(y,mo-1,day);if(check.getFullYear()===y&&check.getMonth()===mo-1&&check.getDate()===day)return `${y}-${String(mo).padStart(2,"0")}-${String(day).padStart(2,"0")}`;return "";}
+ // Dates entered/displayed in Vietnam use day/month/year, not US month/day/year.
+ m=raw.match(/^(\d{1,2})[\/. -](\d{1,2})[\/. -](\d{4})$/);
+ if(m){const day=Number(m[1]),mo=Number(m[2]),y=Number(m[3]);const check=new Date(y,mo-1,day);if(check.getFullYear()===y&&check.getMonth()===mo-1&&check.getDate()===day)return `${y}-${String(mo).padStart(2,"0")}-${String(day).padStart(2,"0")}`;}
+ return "";
+}
 function itineraryIsCompleted(item){
- const date=String(item.date||"");
- if(!/^\d{4}-\d{2}-\d{2}$/.test(date))return false;
+ const date=itineraryDateISO(item.date);
+ if(!date)return false;
  const today=localDate();
  if(date<today)return true;
  if(date>today||!item.time)return false;
- const match=String(item.time).trim().match(/^(\d{1,2})(?::|h)(\d{2})$/i);
+ const match=String(item.time).trim().match(/^(\d{1,2})(?::|h)(\d{1,2})?$/i);
  if(!match)return false;
- const hour=Number(match[1]),minute=Number(match[2]);
+ const hour=Number(match[1]),minute=Number(match[2]||0);
  if(hour>23||minute>59)return false;
  const now=new Date();
  return hour*60+minute<=now.getHours()*60+now.getMinutes();
@@ -217,6 +233,49 @@ function renderItinerary(){
  $("itineraryCount").textContent=`${sorted.length} hoạt động`;
  const itineraryCardColors=[["#FCE4EC","#E8B7C9"],["#E3F0FC","#AFCBE8"],["#E5F1E2","#B8D2B2"],["#FFF0D9","#E8C995"],["#EFE5F5","#CFB8DE"],["#DFF1EF","#A9D4CE"],["#F9E5DD","#E2B6A6"],["#E8EAF6","#B9C2E3"]];
  $("itineraryList").innerHTML=sorted.length?sorted.map((x,i)=>`<article class="itinerary-item" style="--itinerary-card-bg:${itineraryCardColors[i%itineraryCardColors.length][0]};--itinerary-card-border:${itineraryCardColors[i%itineraryCardColors.length][1]}"><div class="itinerary-top itinerary-heading"><div class="itinerary-date">📅 ${escapeHTML(displayDate(x.date))}${x.time?` · ${escapeHTML(x.time)}`:""}</div><span class="itinerary-kind">${escapeHTML(x.type||"Khác")}</span></div><div class="itinerary-details"><div>📍 <b>Địa điểm:</b> ${escapeHTML(x.place||"—")}</div><div>🏠 <b>Địa chỉ:</b> ${escapeHTML(x.address||"—")}</div><div>🚗 <b>Phương tiện:</b> ${escapeHTML(x.transport||"—")}</div><div class="itinerary-note">📝 <b>Ghi chú:</b> ${escapeHTML(x.note||"—")}</div></div>${completionStampHTML(x)}${isViewer()?"":`<div class="itinerary-actions"><button class="secondary" data-itinerary-edit="${escapeHTML(x.id)}" type="button">✏️ Sửa</button><button class="danger" data-itinerary-delete="${escapeHTML(x.id)}" type="button">Xóa</button></div>`}</article>`).join(""):'<div class="empty">Chưa có lịch trình. Thêm hoạt động đầu tiên nhé! 💗</div>';
+ positionCompletionStamps();
+}
+function positionCompletionStamps(){
+ document.querySelectorAll(".itinerary-item .itinerary-completion-stamps").forEach(layer=>{
+   const card=layer.closest(".itinerary-item");
+   const imgs=[...layer.querySelectorAll("img")];
+   if(!card||!imgs.length)return;
+   const cw=card.clientWidth,ch=card.clientHeight;
+   const mobile=matchMedia("(max-width:600px)").matches;
+   const stampW=Math.min(mobile?cw*.31:158,mobile?124:158);
+   const placed=[];
+   imgs.forEach((img,index)=>{
+     img.style.width=`${stampW}px`;
+     const stampH=stampW*(img.naturalHeight&&img.naturalWidth?img.naturalHeight/img.naturalWidth:1);
+     const pad=stampW*.56;
+     let chosen=null;
+     // Chọn vị trí ngẫu nhiên; chỉ chấp nhận nếu không giao nhau với dấu đã đặt.
+     for(let attempt=0;attempt<180&&!chosen;attempt++){
+       const x=pad+Math.random()*Math.max(1,cw-pad*2);
+       const y=pad+Math.random()*Math.max(1,ch-pad*2);
+       const box={x,y,w:stampW*.88,h:stampH*.88};
+       if(placed.every(q=>Math.abs(box.x-q.x)>=(box.w+q.w)/2+8 || Math.abs(box.y-q.y)>=(box.h+q.h)/2+8))chosen={x,y};
+     }
+     // Lưới dự phòng nếu thẻ hẹp hoặc có nhiều dấu.
+     if(!chosen){
+       const fallbacks=[
+         [.18,.34],[.82,.34],[.5,.72],[.18,.78],[.82,.78],[.5,.38]
+       ];
+       for(const [fx,fy] of fallbacks){
+         const x=Math.max(pad,Math.min(cw-pad,cw*fx));
+         const y=Math.max(pad,Math.min(ch-pad,ch*fy));
+         const box={x,y,w:stampW*.88,h:stampH*.88};
+         if(placed.every(q=>Math.abs(box.x-q.x)>=(box.w+q.w)/2+6 || Math.abs(box.y-q.y)>=(box.h+q.h)/2+6)){chosen={x,y};break}
+       }
+     }
+     chosen=chosen||{x:cw/2,y:Math.max(pad,Math.min(ch-pad,pad+index*(stampH+12)))};
+     const angle=(Math.random()*18-9).toFixed(1);
+     img.style.left=`${chosen.x}px`;
+     img.style.top=`${chosen.y}px`;
+     img.style.transform=`translate(-50%,-50%) rotate(${angle}deg)`;
+     placed.push({x:chosen.x,y:chosen.y,w:stampW*.88,h:stampH*.88});
+   });
+ });
 }
 function renderStay(){$("stayName").value=stayInfo.name||"";$("stayAddress").value=stayInfo.address||"";}
 
