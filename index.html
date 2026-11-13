@@ -241,42 +241,50 @@ function positionCompletionStamps(){
    const imgs=[...layer.querySelectorAll("img")];
    if(!card||!imgs.length)return;
    const cw=card.clientWidth,ch=card.clientHeight;
+   if(!cw||!ch)return;
    const mobile=matchMedia("(max-width:600px)").matches;
-   const stampW=Math.min(mobile?cw*.31:158,mobile?124:158);
+   // Size stamps to the available card area so 2–3 can fit without touching.
+   const desired=Math.min(mobile?cw*.235: cw*.155, mobile?104:154, ch*.56);
    const placed=[];
+   const gap=mobile?9:12;
    imgs.forEach((img,index)=>{
-     img.style.width=`${stampW}px`;
-     const stampH=stampW*(img.naturalHeight&&img.naturalWidth?img.naturalHeight/img.naturalWidth:1);
-     const pad=stampW*.56;
+     img.style.width=`${desired}px`;
+     img.style.height="auto";
+     img.style.display="block";
+     const ratio=(img.naturalWidth&&img.naturalHeight)?img.naturalHeight/img.naturalWidth:1;
+     const w=desired,h=desired*ratio;
      let chosen=null;
-     // Chọn vị trí ngẫu nhiên; chỉ chấp nhận nếu không giao nhau với dấu đã đặt.
-     for(let attempt=0;attempt<180&&!chosen;attempt++){
-       const x=pad+Math.random()*Math.max(1,cw-pad*2);
-       const y=pad+Math.random()*Math.max(1,ch-pad*2);
-       const box={x,y,w:stampW*.88,h:stampH*.88};
-       if(placed.every(q=>Math.abs(box.x-q.x)>=(box.w+q.w)/2+8 || Math.abs(box.y-q.y)>=(box.h+q.h)/2+8))chosen={x,y};
+     // Use the rotated stamp's full axis-aligned bounds for collision checks.
+     // This is deliberately conservative: visible stamp artwork cannot overlap.
+     for(let attempt=0;attempt<900&&!chosen;attempt++){
+       const angle=(Math.random()*22-11)*Math.PI/180;
+       const halfW=Math.abs(Math.cos(angle))*w/2+Math.abs(Math.sin(angle))*h/2;
+       const halfH=Math.abs(Math.sin(angle))*w/2+Math.abs(Math.cos(angle))*h/2;
+       const minX=halfW+3,maxX=cw-halfW-3,minY=halfH+3,maxY=ch-halfH-3;
+       if(maxX<minX||maxY<minY)break;
+       const x=minX+Math.random()*(maxX-minX);
+       const y=minY+Math.random()*(maxY-minY);
+       const box={left:x-halfW,right:x+halfW,top:y-halfH,bottom:y+halfH};
+       const clear=placed.every(q=>box.right+gap<=q.left||box.left>=q.right+gap||box.bottom+gap<=q.top||box.top>=q.bottom+gap);
+       if(clear)chosen={x,y,angle,box};
      }
-     // Lưới dự phòng nếu thẻ hẹp hoặc có nhiều dấu.
      if(!chosen){
-       const fallbacks=[
-         [.18,.34],[.82,.34],[.5,.72],[.18,.78],[.82,.78],[.5,.38]
-       ];
-       for(const [fx,fy] of fallbacks){
-         const x=Math.max(pad,Math.min(cw-pad,cw*fx));
-         const y=Math.max(pad,Math.min(ch-pad,ch*fy));
-         const box={x,y,w:stampW*.88,h:stampH*.88};
-         if(placed.every(q=>Math.abs(box.x-q.x)>=(box.w+q.w)/2+6 || Math.abs(box.y-q.y)>=(box.h+q.h)/2+6)){chosen={x,y};break}
-       }
+       // Never force a fallback position: hide this stamp rather than overlap another.
+       img.style.display="none";
+       return;
      }
-     chosen=chosen||{x:cw/2,y:Math.max(pad,Math.min(ch-pad,pad+index*(stampH+12)))};
-     const angle=(Math.random()*18-9).toFixed(1);
      img.style.left=`${chosen.x}px`;
      img.style.top=`${chosen.y}px`;
-     img.style.transform=`translate(-50%,-50%) rotate(${angle}deg)`;
-     placed.push({x:chosen.x,y:chosen.y,w:stampW*.88,h:stampH*.88});
+     img.style.transform=`translate(-50%,-50%) rotate(${(chosen.angle*180/Math.PI).toFixed(1)}deg)`;
+     img.style.display="block";
+     placed.push(chosen.box);
    });
  });
 }
+// Re-run after image dimensions are known and when the viewport changes.
+document.addEventListener("load",e=>{if(e.target&&e.target.matches&&e.target.matches(".itinerary-completion-stamps img"))positionCompletionStamps()},true);
+window.addEventListener("resize",()=>{clearTimeout(window.__stampResizeTimer);window.__stampResizeTimer=setTimeout(positionCompletionStamps,120)});
+
 function renderStay(){$("stayName").value=stayInfo.name||"";$("stayAddress").value=stayInfo.address||"";}
 
 $("fundDate").value=localDate();$("expDate").value=localDate();
